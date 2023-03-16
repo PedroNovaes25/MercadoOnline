@@ -1,0 +1,16 @@
+Criando um arquivo .gitignore
+
+
+Pré requisitos:
+
+- .NET core 3+
+- Git 2+
+
+Conferir versões:
+- dotnet --version
+- git --version
+
+-- No console
+
+dotnet new --list (listará todos os templates .NET, sendo um deles o .gitignore)
+
