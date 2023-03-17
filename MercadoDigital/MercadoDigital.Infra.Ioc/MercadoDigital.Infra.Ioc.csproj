@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MercadoDigital.Application\MercadoDigital.Application.csproj" />
+    <ProjectReference Include="..\MercadoDigital.Domain\MercadoDigital.Domain.csproj" />
+    <ProjectReference Include="..\MercadoDigital.Infra.Data\MercadoDigital.Infra.Data.csproj" />
+  </ItemGroup>
+
 </Project>
