@@ -1,4 +1,6 @@
-﻿namespace MercadoDigital.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MercadoDigital.Domain.Entities
 {
     public class Categoria
     {
