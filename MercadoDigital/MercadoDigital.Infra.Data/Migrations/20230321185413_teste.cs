@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MercadoDigital.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class teste : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,9 +15,9 @@ namespace MercadoDigital.Infra.Data.Migrations
                 name: "Categorias",
                 columns: table => new
                 {
-                    IdCategoria = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: false)
+                    IdCategoria = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "50, 5"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,12 +28,12 @@ namespace MercadoDigital.Infra.Data.Migrations
                 name: "Produtos",
                 columns: table => new
                 {
-                    IdProduto = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: false),
-                    Vencimento = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Descricao = table.Column<string>(type: "TEXT", nullable: false),
-                    Preco = table.Column<double>(type: "REAL", nullable: false)
+                    IdProduto = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "40, 5"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Vencimento = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Preco = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,17 +44,17 @@ namespace MercadoDigital.Infra.Data.Migrations
                 name: "Usuarios",
                 columns: table => new
                 {
-                    IdUsuario = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: false),
-                    Rg = table.Column<string>(type: "TEXT", nullable: false),
-                    Cpf = table.Column<string>(type: "TEXT", nullable: false),
-                    Nascimento = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Idade = table.Column<int>(type: "INTEGER", nullable: false),
-                    Sexo = table.Column<string>(type: "TEXT", nullable: false),
-                    Celular = table.Column<string>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: false),
-                    Password = table.Column<string>(type: "TEXT", nullable: false)
+                    IdUsuario = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "60, 5"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rg = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cpf = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Idade = table.Column<int>(type: "int", nullable: false),
+                    Sexo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Celular = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,8 +65,8 @@ namespace MercadoDigital.Infra.Data.Migrations
                 name: "CategoriaProduto",
                 columns: table => new
                 {
-                    IdCategoria = table.Column<int>(type: "INTEGER", nullable: false),
-                    IdProduto = table.Column<int>(type: "INTEGER", nullable: false)
+                    IdCategoria = table.Column<int>(type: "int", nullable: false),
+                    IdProduto = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,10 +89,10 @@ namespace MercadoDigital.Infra.Data.Migrations
                 name: "Estoques",
                 columns: table => new
                 {
-                    IdEstoque = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Quantidade = table.Column<int>(type: "INTEGER", nullable: false),
-                    IdProduto = table.Column<int>(type: "INTEGER", nullable: false)
+                    IdEstoque = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "20, 5"),
+                    Quantidade = table.Column<int>(type: "int", nullable: false),
+                    IdProduto = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,16 +109,16 @@ namespace MercadoDigital.Infra.Data.Migrations
                 name: "Enderecos",
                 columns: table => new
                 {
-                    IdEndereco = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Cep = table.Column<string>(type: "TEXT", nullable: false),
-                    Logradouro = table.Column<string>(type: "TEXT", nullable: false),
-                    Numero = table.Column<int>(type: "INTEGER", nullable: false),
-                    Bairro = table.Column<string>(type: "TEXT", nullable: false),
-                    Cidade = table.Column<string>(type: "TEXT", nullable: false),
-                    UF = table.Column<string>(type: "TEXT", nullable: false),
-                    Complemento = table.Column<string>(type: "TEXT", nullable: true),
-                    IdUsuario = table.Column<int>(type: "INTEGER", nullable: false)
+                    IdEndereco = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "10, 5"),
+                    Cep = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Logradouro = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Numero = table.Column<int>(type: "int", nullable: false),
+                    Bairro = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cidade = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UF = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Complemento = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdUsuario = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -135,11 +135,11 @@ namespace MercadoDigital.Infra.Data.Migrations
                 name: "Pedidos",
                 columns: table => new
                 {
-                    IdPedido = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ValorPedido = table.Column<double>(type: "REAL", nullable: false),
-                    DataCompra = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    IdUsuario = table.Column<int>(type: "INTEGER", nullable: false)
+                    IdPedido = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "30, 5"),
+                    ValorPedido = table.Column<double>(type: "float", nullable: false),
+                    DataCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IdUsuario = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -156,10 +156,10 @@ namespace MercadoDigital.Infra.Data.Migrations
                 name: "PedidoItem",
                 columns: table => new
                 {
-                    IdProduto = table.Column<int>(type: "INTEGER", nullable: false),
-                    IdPedido = table.Column<int>(type: "INTEGER", nullable: false),
-                    Quantidade = table.Column<int>(type: "INTEGER", nullable: false),
-                    Subtotal = table.Column<double>(type: "REAL", nullable: false)
+                    IdProduto = table.Column<int>(type: "int", nullable: false),
+                    IdPedido = table.Column<int>(type: "int", nullable: false),
+                    Quantidade = table.Column<int>(type: "int", nullable: false),
+                    Subtotal = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {

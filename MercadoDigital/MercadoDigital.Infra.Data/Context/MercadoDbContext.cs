@@ -17,33 +17,52 @@ namespace MercadoDigital.Infra.Data.Context
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Estoque> Estoques { get; set; }
 
-        public string DbPath { get; }
 
-        public MercadoDbContext()
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            DbPath = System.IO.Path.Join(path, "blogging.db");
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite($"Data Source={DbPath}");
+            var sourceDbTemp = "Data Source=DESKTOP-IIHJ6QS;Initial Catalog=MercadoOnlineDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+            options.UseSqlServer(sourceDbTemp);
+        } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+    
+            //Config PrimaryKey
+            modelBuilder.Entity<Endereco>().HasKey(c => c.IdEndereco);
+            modelBuilder.Entity<Endereco>().Property(e => e.IdEndereco)
+                .UseIdentityColumn(seed:10, increment:5);
+
+            modelBuilder.Entity<Estoque>().HasKey(c => c.IdEstoque);
+            modelBuilder.Entity<Estoque>().Property(e => e.IdEstoque)
+                .UseIdentityColumn(seed: 20, increment: 5);
+            
+            modelBuilder.Entity<Pedido>().HasKey(c => c.IdPedido);
+            modelBuilder.Entity<Pedido>().Property(e => e.IdPedido)
+                .UseIdentityColumn(seed: 30, increment: 5);
+            
+            modelBuilder.Entity<Produto>().HasKey(c => c.IdProduto);
+            modelBuilder.Entity<Produto>().Property(e => e.IdProduto)
+                .UseIdentityColumn(seed: 40, increment: 5);
+            
+            modelBuilder.Entity<Categoria>().HasKey(c => c.IdCategoria);
+            modelBuilder.Entity<Categoria>().Property(e => e.IdCategoria)
+              .UseIdentityColumn(seed: 50, increment: 5);
+            
+            modelBuilder.Entity<Usuario>().HasKey(c => c.IdUsuario);
+            modelBuilder.Entity<Usuario>().Property(e => e.IdUsuario)
+              .UseIdentityColumn(seed: 60, increment: 5);
+
+            modelBuilder.Entity<CategoriaProduto>()
+            .HasKey(k => new { k.IdCategoria, k.IdProduto });
+
+            modelBuilder.Entity<PedidoItem>()
+            .HasKey(k => new { k.IdPedido, k.IdProduto });
 
             //Usuario Endereco
             modelBuilder.Entity<Usuario>()
                 .HasOne(ue => ue.Endereco)
                 .WithOne(eu => eu.Usuario)
                 .HasForeignKey<Endereco>(eu => eu.IdUsuario);
-
-            modelBuilder.Entity<Endereco>().HasKey(c => c.IdEndereco);
-            modelBuilder.Entity<Estoque>().HasKey(c => c.IdEstoque);
-            modelBuilder.Entity<Pedido>().HasKey(c => c.IdPedido);
-            modelBuilder.Entity<Produto>().HasKey(c => c.IdProduto);
-            modelBuilder.Entity<Categoria>().HasKey(c => c.IdCategoria);
-            modelBuilder.Entity<Usuario>().HasKey(c => c.IdUsuario);
-
 
             //Produto Estoque
             modelBuilder.Entity<Produto>()
@@ -60,9 +79,6 @@ namespace MercadoDigital.Infra.Data.Context
             //CategoriaProduto Produto
             //CategoriaProduto Categoria
             modelBuilder.Entity<CategoriaProduto>()
-                .HasKey(k => new { k.IdCategoria, k.IdProduto });
-
-            modelBuilder.Entity<CategoriaProduto>()
                 .HasOne(cpp => cpp.Categoria)
                 .WithMany(pcp => pcp.CategoriaProduto)
                 .HasForeignKey(cpp => cpp.IdCategoria);
@@ -75,9 +91,6 @@ namespace MercadoDigital.Infra.Data.Context
             //PedidoItem Pedido
             //PedidoItem Produto
             modelBuilder.Entity<PedidoItem>()
-                .HasKey(k => new { k.IdPedido, k.IdProduto });
-
-            modelBuilder.Entity<PedidoItem>()
                 .HasOne(pip => pip.Pedido)
                 .WithMany(ppi => ppi.PedidoItem)
                 .HasForeignKey(pip => pip.IdPedido);
@@ -86,8 +99,6 @@ namespace MercadoDigital.Infra.Data.Context
                 .HasOne(pip => pip.Produto)
                 .WithMany(ppi => ppi.PedidoItem)
                 .HasForeignKey(pip => pip.IdProduto);
-
         }
-
     }
 }
