@@ -1,6 +1,6 @@
 ﻿using MercadoDigital.Domain.Entities;
 using MercadoDigital.Domain.IRepositories;
-using MercadoDigital.Infra.Data.Context;
+using MercadoDigital.Infra.Data.Connection;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

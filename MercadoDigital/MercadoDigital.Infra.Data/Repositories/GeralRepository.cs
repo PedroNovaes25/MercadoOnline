@@ -1,6 +1,6 @@
 ﻿using MercadoDigital.Domain.Entities;
 using MercadoDigital.Domain.IRepositories;
-using MercadoDigital.Infra.Data.Context;
+using MercadoDigital.Infra.Data.Connection;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Infra.Data.Repositories
 {
-    public class GeralRepository : IGeralRepository
+    public class GeralRepository : IRepositoryHandler
     {
         private readonly DbContext _context;
 
@@ -42,6 +42,7 @@ namespace MercadoDigital.Infra.Data.Repositories
         public void DeleteRange<T>(T[] entityArray) where T : class
         {
             _context.RemoveRange(entityArray);
+
         }
 
         public async Task<bool> SaveChangesAsync()

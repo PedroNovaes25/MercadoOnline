@@ -6,10 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MercadoDigital.Infra.Data.Context
+namespace MercadoDigital.Infra.Data.Connection
 {
     public class MercadoDbContext : DbContext
     {
+
+        public MercadoDbContext(DbContextOptions<MercadoDbContext> options)
+      : base(options)
+        {
+        }
+
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
@@ -18,11 +24,11 @@ namespace MercadoDigital.Infra.Data.Context
         public DbSet<Estoque> Estoques { get; set; }
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            var sourceDbTemp = "Data Source=DESKTOP-IIHJ6QS;Initial Catalog=MercadoOnlineDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
-            options.UseSqlServer(sourceDbTemp);
-        } 
+        //protected override void OnConfiguring(DbContextOptionsBuilder options)
+        //{
+        //    var sourceDbTemp = "Data Source=DESKTOP-IIHJ6QS;Initial Catalog=MercadoOnlineDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+        //    options.UseSqlServer(sourceDbTemp);
+        //} 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
