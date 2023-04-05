@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MercadoOnlineTest
 {
-    public class TestWithSqlLite : IDisposable 
+    public class TestWithSqlLite
     {
         private const string InMemoryConnectionString = "DataSource=:memory:";
         private readonly SqliteConnection _connection;
@@ -27,7 +27,5 @@ namespace MercadoOnlineTest
             Context = new MercadoDbContext(_contextOptions);
             Context.Database.EnsureCreated();
         }
-
-        public void Dispose() => _connection.Dispose();
     }
 }

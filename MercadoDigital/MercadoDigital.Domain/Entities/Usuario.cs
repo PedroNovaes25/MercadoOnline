@@ -33,6 +33,6 @@ namespace MercadoDigital.Domain.Entities
         public string Email { get; set; }
         public string Password { get; set; }
         public Endereco Endereco { get; set; }
-        public Pedido Pedido { get; set; }
+        public List<Pedido> Pedidos { get; set; }
     }
 }

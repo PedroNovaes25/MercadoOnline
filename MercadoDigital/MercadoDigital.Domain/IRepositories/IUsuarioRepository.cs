@@ -9,5 +9,9 @@ namespace MercadoDigital.Domain.IRepositories
 {
     public interface IUsuarioRepository
     {
+        Task<Usuario> Create(Usuario usuario);
+        Task<Usuario> GetById(int usuarioId);
+        Task<bool> Update(Usuario usuario);
+        Task<bool> Delete(Usuario usuario);
     }
 }

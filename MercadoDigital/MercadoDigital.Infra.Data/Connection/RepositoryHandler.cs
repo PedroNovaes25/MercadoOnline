@@ -1,4 +1,4 @@
-﻿using MercadoDigital.Domain.IRepositories;
+﻿using MercadoDigital.Domain.IRepositories.Handler;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace MercadoDigital.Infra.Data.Connection
             _options = options;
         }
         
-        public async Task<T> Create<T>(T entity) where T : class
+        public async Task<T> Insert<T>(T entity) where T : class
         {
             using (var context = GetNewContext())
             {
@@ -27,7 +27,7 @@ namespace MercadoDigital.Infra.Data.Connection
                 return entity;
             }
         }
-        public async Task<bool> Delete<T>(T entity) where T : class
+        public async Task<bool> Remove<T>(T entity) where T : class
         {
             using (var context = GetNewContext())
             {
@@ -35,14 +35,14 @@ namespace MercadoDigital.Infra.Data.Connection
                 return await SaveChangesAsync(context);
             }
         }
-        public void DeleteRange<T>(T[] models) where T : class
+        public void RemoveRange<T>(T[] models) where T : class
         {
             using (var context = GetNewContext())
             {
                 context.RemoveRange(models);
             }
         }
-        public async Task<bool> Update<T>(T entity) where T : class
+        public async Task<bool> Updates<T>(T entity) where T : class
         {
             using (var context = GetNewContext())
             {
@@ -79,5 +79,4 @@ namespace MercadoDigital.Infra.Data.Connection
             }
         }
     } 
-
 }

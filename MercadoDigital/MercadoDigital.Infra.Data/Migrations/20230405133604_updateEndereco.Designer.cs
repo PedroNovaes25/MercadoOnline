@@ -4,6 +4,7 @@ using MercadoDigital.Infra.Data.Connection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MercadoDigital.Infra.Data.Migrations
 {
     [DbContext(typeof(MercadoDbContext))]
-    partial class MercadoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230405133604_updateEndereco")]
+    partial class updateEndereco
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,7 +143,8 @@ namespace MercadoDigital.Infra.Data.Migrations
 
                     b.HasKey("IdPedido");
 
-                    b.HasIndex("IdUsuario");
+                    b.HasIndex("IdUsuario")
+                        .IsUnique();
 
                     b.ToTable("Pedidos");
                 });
@@ -284,8 +288,8 @@ namespace MercadoDigital.Infra.Data.Migrations
             modelBuilder.Entity("MercadoDigital.Domain.Entities.Pedido", b =>
                 {
                     b.HasOne("MercadoDigital.Domain.Entities.Usuario", "Usuario")
-                        .WithMany("Pedidos")
-                        .HasForeignKey("IdUsuario")
+                        .WithOne("Pedido")
+                        .HasForeignKey("MercadoDigital.Domain.Entities.Pedido", "IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -336,7 +340,8 @@ namespace MercadoDigital.Infra.Data.Migrations
                     b.Navigation("Endereco")
                         .IsRequired();
 
-                    b.Navigation("Pedidos");
+                    b.Navigation("Pedido")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

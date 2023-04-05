@@ -9,7 +9,7 @@ namespace MercadoDigital.Domain.Entities
 {
     public class Endereco
     {
-        public Endereco(string cep, string logradouro, int numero, string bairro, string cidade, string uF)
+        public Endereco(string cep, string logradouro, int numero, string bairro, string cidade, string uF, int idUsuario)
         {
             Cep = cep;
             Logradouro = logradouro;
@@ -17,6 +17,7 @@ namespace MercadoDigital.Domain.Entities
             Bairro = bairro;
             Cidade = cidade;
             UF = uF;
+            IdUsuario = idUsuario;
         }
 
         public int IdEndereco { get; set; }
@@ -28,6 +29,6 @@ namespace MercadoDigital.Domain.Entities
         public string UF { get; set; }
         public string? Complemento { get; set; }
         public int IdUsuario { get; set; }
-        public Usuario Usuario { get; set; }
+        public Usuario? Usuario { get; set; }
     }
 }

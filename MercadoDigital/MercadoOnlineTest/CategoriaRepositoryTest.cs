@@ -12,17 +12,16 @@ namespace MercadoOnlineTest
 {
     public class CategoriaRepositoryTest : TestWithSqlLite
     {
-        private readonly CategoriaRepositoryV2 _categoriaRepositoryV2;
+        private readonly CategoriaRepository _categoriaRepositoryV2;
 
         public CategoriaRepositoryTest()
         {
-            this._categoriaRepositoryV2 = new CategoriaRepositoryV2(_contextOptions);
+            this._categoriaRepositoryV2 = new CategoriaRepository(_contextOptions);
             LoadDatas().Wait();
         }
 
         private async Task LoadDatas()
         {
-
             var categorias = new List<Categoria>()
             {
                 new Categoria("Carne Vermelha"),
@@ -37,7 +36,7 @@ namespace MercadoOnlineTest
 
             foreach (var categoria in categorias)
             {
-                await _categoriaRepositoryV2.Create<Categoria>(categoria);
+                await _categoriaRepositoryV2.Insert<Categoria>(categoria);
             }
         }
 
@@ -52,7 +51,7 @@ namespace MercadoOnlineTest
 
             foreach (var categoria in categorias)
             {
-                var t = await _categoriaRepositoryV2.Create<Categoria>(categoria);
+                var model = await _categoriaRepositoryV2.Insert<Categoria>(categoria);
                 Assert.True(categoria.IdCategoria > 0);
             }
         }
@@ -65,7 +64,7 @@ namespace MercadoOnlineTest
             caterogia.Nome = "Laticionios";
 
             var create = await _categoriaRepositoryV2.Update(caterogia);
-            
+
             Assert.True(create);
             Assert.True(caterogia.IdCategoria == idCategoria);
 

@@ -10,51 +10,63 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Infra.Data.Repositories
 {
-    public class ProdutoRepository : IProdutoRepository
+    public class ProdutoRepository : RepositoryHandler, IProdutoRepository
     {
-        private readonly MercadoDbContext _context;
-
-        public ProdutoRepository(MercadoDbContext context)
+        public ProdutoRepository(DbContextOptions<MercadoDbContext> options) : base(options)
         {
-            _context = context;
+        }
+
+        public async Task<Produto> Create(Produto produto)
+        {
+            return await Insert(produto);
+        }
+        public async Task<bool> Delete(Produto produto)
+        {
+            return await Remove(produto);
+        }
+        public async Task<bool> Update(Produto produto)
+        {
+            return await Updates(produto);
         }
         public async Task<IEnumerable<Produto>> GetAllProducts()
         {
-            using (var context = _context)
-            {
-                return await context.Produtos.AsNoTracking()
-                    .ToListAsync();
-            }
+            return await CommandExecuterTeste2
+            (
+                p => p.Produtos
+                .AsNoTracking()
+                .ToListAsync()
+            );
         }
-
         public async Task<IEnumerable<Produto>> GetAllProductsFromCategoryId(int idCatgoria)
         {
-            using (var context = _context)
-            {
-                return await context.Produtos.AsNoTracking()
-                    .Where(c => c.CategoriaProduto.Any(x => x.IdCategoria == idCatgoria))
-                    .ToListAsync();
-            }
+            return await CommandExecuterTeste2
+            (
+                p => p.Produtos
+                .AsNoTracking()
+                .Where(c => c.CategoriaProduto
+                .Any(x => x.IdCategoria == idCatgoria))
+                .ToListAsync()
+            );
         }
-
         public async Task<Produto> GetProductById(int idProduto)
         {
-            using (var context = _context)
-            {
-                return await context.Produtos.AsNoTracking()
-                    .Where(p => p.IdProduto == idProduto)
-                    .FirstAsync();
-            }
+            return (await CommandExecuterTeste2
+            (   
+                p => p.Produtos
+                .AsNoTracking()
+                .Where(p => p.IdProduto == idProduto)
+                .FirstOrDefaultAsync()
+            ))!;
         }
-
         public async Task<IEnumerable<Produto>> GetProductByName(string name)
         {
-            using (var context = _context)
-            {
-                return await context.Produtos.AsNoTracking()
-                    .Where(p => p.Nome.Contains(name))
-                    .ToListAsync();
-            }
+            return await CommandExecuterTeste2
+            (
+                p => p.Produtos
+                .AsNoTracking()
+                .Where(p => p.Nome.Contains(name))
+                .ToListAsync()
+            );
         }
     }
 }

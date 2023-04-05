@@ -6,63 +6,65 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MercadoDigital.Infra.Data.Repositories
 {
-    public class EstoqueRepository : IEstoqueRepository
+    public class EstoqueRepository : RepositoryHandler, IEstoqueRepository
     {
-        private readonly MercadoDbContext _context;
-
-        public EstoqueRepository(MercadoDbContext context)
+        public EstoqueRepository(DbContextOptions<MercadoDbContext> options) : base(options)
         {
-            this._context = context;
+        }
+
+        public async Task<bool> CreateOrUpdate(Estoque estoque)
+        {
+            return await Updates(estoque);
+        }
+        public async Task<bool> Delete(Estoque produto)
+        {
+            return await Remove(produto);
         }
         public async Task<IEnumerable<EstoqueEProduto>> GetAllEstoque()
         {
-            using (var context = _context) 
-            {
-                return await context.Estoques.AsNoTracking()
-                    .Select
-                    (
-                        e => new EstoqueEProduto(e.Quantidade, e.IdEstoque, 
-                        e.Produto.IdProduto, e.Produto.Nome, e.Produto.Vencimento,
-                        e.Produto.Descricao, e.Produto.Preco)
-                    ).ToListAsync();
-            }
+            return await CommandExecuterTeste2
+            (
+                e => e.Estoques
+                .AsNoTracking()
+                .Select
+                (
+                    e => new EstoqueEProduto(e.Quantidade, e.IdEstoque, 
+                    e.Produto.IdProduto, e.Produto.Nome, e.Produto.Vencimento,
+                    e.Produto.Descricao, e.Produto.Preco)
+                ).ToListAsync()
+            );
         }
-
         public async Task<EstoqueEProduto> GetEstoqueById(int idEstoque)
         {
-            using (var context = _context)
-            {
-                return await context.Estoques.AsNoTracking()
-                    .Select
-                    (
-                        e => new EstoqueEProduto(e.Quantidade, e.IdEstoque,
-                        e.Produto.IdProduto, e.Produto.Nome, e.Produto.Vencimento,
-                        e.Produto.Descricao, e.Produto.Preco)
-                    ).Where(e => e.IdEstoque == idEstoque).FirstAsync();
-            }
+            return (await CommandExecuterTeste2
+            (
+                e => e.Estoques
+                .AsNoTracking()
+                .Where(e => e.IdEstoque == idEstoque)
+                .Select
+                (
+                    e => new EstoqueEProduto(e.Quantidade, e.IdEstoque,
+                    e.Produto.IdProduto, e.Produto.Nome, e.Produto.Vencimento,
+                    e.Produto.Descricao, e.Produto.Preco)
+                )
+                .FirstOrDefaultAsync()
+            ))!;
         }
-
         public async Task<EstoqueEProduto> GetEstoqueByProductId(int idProduto)
         {
-            using (var context = _context)
-            {
-                return await context.Estoques.AsNoTracking()
-                    .Select
-                    (
-                        e => new EstoqueEProduto(e.Quantidade, e.IdEstoque,
-                        e.Produto.IdProduto, e.Produto.Nome, e.Produto.Vencimento,
-                        e.Produto.Descricao, e.Produto.Preco)
-                    ).Where(e => e.IdProduto == idProduto).FirstAsync();
-            }
-        }
-
-        public async Task<bool> CreateAndUpdate(Estoque estoque) 
-        {
-            using (var context = _context) 
-            {
-                context.Update(estoque);
-                return await (context.SaveChangesAsync()) > 0;
-            }
+            return (await CommandExecuterTeste2
+            (
+                e => e.Estoques
+                .AsNoTracking()
+                .Where(e => e.IdProduto == idProduto)
+                .Select
+                (
+                    e => new EstoqueEProduto(e.Quantidade, e.IdEstoque,
+                    e.Produto.IdProduto, e.Produto.Nome, e.Produto.Vencimento,
+                    e.Produto.Descricao, e.Produto.Preco)
+                )
+                .FirstOrDefaultAsync()
+            ))!;
         }
     }
 }

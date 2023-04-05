@@ -10,43 +10,56 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Infra.Data.Repositories
 {
-    public class CategoriaRepository : ICategoriaRepository
+    public class CategoriaRepository : RepositoryHandler, ICategoriaRepository
     {
-        private readonly MercadoDbContext _context;
-
-        public CategoriaRepository(MercadoDbContext categoriaDbContext)
+        public CategoriaRepository(DbContextOptions<MercadoDbContext> options) : base(options)
         {
-            this._context = categoriaDbContext;
         }
 
+        public async Task<Categoria> Create(Categoria categoria)
+        {
+            return await Insert(categoria);
+        }
+        public async Task<bool> Delete(Categoria categoria)
+        {
+            return await Remove(categoria);
+        }
+        public async Task<bool> Update(Categoria categoria)
+        {
+            return await Updates(categoria);
+        }
         public async Task<IEnumerable<Categoria>> GetAllCategories()
         {
-            using (var context = _context)
-            {
-                return await context.Categorias.AsNoTracking()
+            var commandResult = await CommandExecuterTeste1
+                (
+                    x => x.Categorias.AsNoTracking()
                     .OrderBy(c => c.Nome)
-                    .ToListAsync();
-            }
-        }
+                    .ToListAsync()
+                );
 
+            return await commandResult;
+        }
+        //Verificar qual é a melhor abordagem CommandExecuterTeste2 ou CommandExecuterTeste1
         public async Task<Categoria> GetCategoryById(int idCategory)
         {
-            using (var context = _context) 
-            {
-                return await context.Categorias.AsNoTracking()
+            return (await CommandExecuterTeste2
+            (
+                c => c.Categorias.AsNoTracking()
                 .Where(c => c.IdCategoria == idCategory)
-            }
+                .FirstOrDefaultAsync()
+            ))!;
         }
-
         public async Task<IEnumerable<Categoria>> GetCategoryByName(string name)
         {
-            using (var context = _context)
-            {
-                return await context.Categorias.AsNoTracking()
+            var commandResult = await CommandExecuterTeste1
+                (
+                    c => c.Categorias.AsNoTracking()
                     .OrderBy(c => c.Nome)
                     .Where(c => c.Nome.ToUpper().Contains(name.ToUpper()))
-                    .ToListAsync();
-            }
+                    .ToListAsync()
+                );
+
+              return await commandResult;
         }
     }
 }
