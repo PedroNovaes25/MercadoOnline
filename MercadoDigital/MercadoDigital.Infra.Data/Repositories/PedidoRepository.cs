@@ -1,6 +1,6 @@
 ﻿using MercadoDigital.Domain.Entities;
 using MercadoDigital.Domain.IRepositories;
-using MercadoDigital.Infra.Data.Context;
+using MercadoDigital.Infra.Data.Connection;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,36 +10,41 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Infra.Data.Repositories
 {
-    public class PedidoRepository : IPedidoRepository
+    public class PedidoRepository : RepositoryHandler, IPedidoRepository
     {
-        private readonly MercadoDbContext _context;
-
-        public PedidoRepository(MercadoDbContext context)
+        public PedidoRepository(DbContextOptions<MercadoDbContext> options) : base(options)
         {
-            _context = context;
+        }
+
+        public async Task<Pedido> Create(Pedido pedido)
+        {
+            return await Insert(pedido);
         }
         public async Task<IEnumerable<Pedido>> GetAllPedidoByUserId(int userId)
         {
-            using (var context = _context)
-            {
-                return await context.Pedidos.AsNoTracking()
-                    .OrderByDescending(p => p.DataCompra)
-                    .Include(p => p.PedidoItem)
-                    .ThenInclude(pi => pi.Produto)
-                    .Where(p => p.IdUsuario == userId).ToListAsync();
-                //Talvez esse where gere problema por conta do p.idusuario
-            }
+            return await CommandExecuterTeste2
+            (
+                p => p.Pedidos
+                .AsNoTracking()
+                .OrderByDescending(p => p.DataCompra)
+                .Include(p => p.PedidoItem)
+                .ThenInclude(pi => pi.Produto)
+                .Where(p => p.IdUsuario == userId)
+                .ToListAsync()
+            );
+            //Talvez esse where gere problema por conta do p.idusuario
         }
-
         public async Task<Pedido> GetPedidoById(int idPedido)
         {
-            using (var context = _context)
-            {
-                return await context.Pedidos.AsNoTracking()
-                    .Include(p => p.PedidoItem)
-                    .ThenInclude(pi => pi.Produto)
-                    .Where(p => p.IdPedido == idPedido).FirstAsync();
-            }
+            return (await CommandExecuterTeste2
+            (   
+                p => p.Pedidos
+                .AsNoTracking()
+                .Include(p => p.PedidoItem)
+                .ThenInclude(pi => pi.Produto)
+                .Where(p => p.IdPedido == idPedido)
+                .FirstOrDefaultAsync()
+            ))!;
         }
     }
 }

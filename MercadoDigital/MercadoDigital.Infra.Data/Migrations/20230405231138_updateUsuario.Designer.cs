@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MercadoDigital.Infra.Data.Migrations
 {
     [DbContext(typeof(MercadoDbContext))]
-    [Migration("20230321185413_teste")]
-    partial class teste
+    [Migration("20230405231138_updateUsuario")]
+    partial class updateUsuario
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -143,8 +143,7 @@ namespace MercadoDigital.Infra.Data.Migrations
 
                     b.HasKey("IdPedido");
 
-                    b.HasIndex("IdUsuario")
-                        .IsUnique();
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("Pedidos");
                 });
@@ -288,8 +287,8 @@ namespace MercadoDigital.Infra.Data.Migrations
             modelBuilder.Entity("MercadoDigital.Domain.Entities.Pedido", b =>
                 {
                     b.HasOne("MercadoDigital.Domain.Entities.Usuario", "Usuario")
-                        .WithOne("Pedido")
-                        .HasForeignKey("MercadoDigital.Domain.Entities.Pedido", "IdUsuario")
+                        .WithMany("Pedidos")
+                        .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -340,8 +339,7 @@ namespace MercadoDigital.Infra.Data.Migrations
                     b.Navigation("Endereco")
                         .IsRequired();
 
-                    b.Navigation("Pedido")
-                        .IsRequired();
+                    b.Navigation("Pedidos");
                 });
 #pragma warning restore 612, 618
         }

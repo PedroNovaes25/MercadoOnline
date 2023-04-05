@@ -10,5 +10,9 @@ namespace MercadoDigital.Domain.IRepositories
     public interface IEnderecoRepository
     {
         Task<Endereco> GetEnderecoById(int idEndereco);
+        Task<Endereco> Create(Endereco endereco);
+        Task<bool> Update(Endereco endereco);
+        Task<bool> Delete(Endereco endereco);
+
     }
 }

@@ -9,14 +9,22 @@ namespace MercadoDigital.Domain.Entities
 {
     public class Estoque
     {
-        public Estoque(int quantidade)
+        public Estoque(int quantidade, int idProduto)
         {
             Quantidade = quantidade;
+            IdProduto = idProduto;
+        }
+
+        public Estoque(int idEstoque, int quantidade, int idProduto)
+        {
+            Quantidade = quantidade;
+            IdProduto = idProduto;
+            IdEstoque = idEstoque;
         }
 
         public int IdEstoque { get; set; }
         public int Quantidade { get; set; }
         public int IdProduto { get; set; }
-        public Produto Produto { get; set; }
+        public Produto? Produto { get; set; }
     }
 }

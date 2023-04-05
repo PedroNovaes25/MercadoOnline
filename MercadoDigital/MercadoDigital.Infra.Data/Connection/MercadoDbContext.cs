@@ -1,15 +1,23 @@
 ﻿using MercadoDigital.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MercadoDigital.Infra.Data.Context
+namespace MercadoDigital.Infra.Data.Connection
 {
     public class MercadoDbContext : DbContext
     {
+        public MercadoDbContext()
+        {
+        }
+
+        public MercadoDbContext(DbContextOptions<MercadoDbContext> options) : base(options)
+        {
+        }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
@@ -20,34 +28,37 @@ namespace MercadoDigital.Infra.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            var sourceDbTemp = "Data Source=DESKTOP-IIHJ6QS;Initial Catalog=MercadoOnlineDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
-            options.UseSqlServer(sourceDbTemp);
-        } 
+            if (!options.IsConfigured)
+            { 
+                var sourceDbTemp = "Data Source=DESKTOP-IIHJ6QS;Initial Catalog=MercadoOnlineDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+                options.UseSqlServer(sourceDbTemp);
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-    
+
             //Config PrimaryKey
             modelBuilder.Entity<Endereco>().HasKey(c => c.IdEndereco);
             modelBuilder.Entity<Endereco>().Property(e => e.IdEndereco)
-                .UseIdentityColumn(seed:10, increment:5);
+                .UseIdentityColumn(seed: 10, increment: 5);
 
             modelBuilder.Entity<Estoque>().HasKey(c => c.IdEstoque);
             modelBuilder.Entity<Estoque>().Property(e => e.IdEstoque)
                 .UseIdentityColumn(seed: 20, increment: 5);
-            
+
             modelBuilder.Entity<Pedido>().HasKey(c => c.IdPedido);
             modelBuilder.Entity<Pedido>().Property(e => e.IdPedido)
                 .UseIdentityColumn(seed: 30, increment: 5);
-            
+
             modelBuilder.Entity<Produto>().HasKey(c => c.IdProduto);
             modelBuilder.Entity<Produto>().Property(e => e.IdProduto)
                 .UseIdentityColumn(seed: 40, increment: 5);
-            
+
             modelBuilder.Entity<Categoria>().HasKey(c => c.IdCategoria);
             modelBuilder.Entity<Categoria>().Property(e => e.IdCategoria)
               .UseIdentityColumn(seed: 50, increment: 5);
-            
+
             modelBuilder.Entity<Usuario>().HasKey(c => c.IdUsuario);
             modelBuilder.Entity<Usuario>().Property(e => e.IdUsuario)
               .UseIdentityColumn(seed: 60, increment: 5);
@@ -72,9 +83,9 @@ namespace MercadoDigital.Infra.Data.Context
 
             //Pedido Usuario
             modelBuilder.Entity<Usuario>()
-                .HasOne(up => up.Pedido)
+                .HasMany(up => up.Pedidos)
                 .WithOne(pu => pu.Usuario)
-                .HasForeignKey<Pedido>(pu => pu.IdUsuario);
+                .HasForeignKey(pu => pu.IdUsuario);
 
             //CategoriaProduto Produto
             //CategoriaProduto Categoria

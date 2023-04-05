@@ -13,6 +13,7 @@ namespace MercadoDigital.Domain.IRepositories
         Task<IEnumerable<EstoqueEProduto>> GetAllEstoque();
         Task<EstoqueEProduto> GetEstoqueById(int idEstoque);
         Task<EstoqueEProduto> GetEstoqueByProductId(int idProduto);
-        Task<bool> CreateAndUpdate(Estoque estoque);
+        Task<bool> CreateOrUpdate(Estoque estoque);
+        Task<bool> Delete(Estoque produto);
     }
 }

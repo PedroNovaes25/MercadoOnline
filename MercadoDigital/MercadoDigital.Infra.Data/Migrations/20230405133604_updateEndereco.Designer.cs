@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MercadoDigital.Infra.Data.Migrations
 {
     [DbContext(typeof(MercadoDbContext))]
-    [Migration("20230321185413_teste")]
-    partial class teste
+    [Migration("20230405133604_updateEndereco")]
+    partial class updateEndereco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
