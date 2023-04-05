@@ -34,7 +34,7 @@ namespace MercadoDigital.Infra.Data.Repositories
             using (var context = _context) 
             {
                 return await context.Categorias.AsNoTracking()
-                    .Where(c => c.IdCategoria == idCategory).FirstAsync();
+                .Where(c => c.IdCategoria == idCategory)
             }
         }
 
