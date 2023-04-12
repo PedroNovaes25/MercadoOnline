@@ -23,7 +23,7 @@ namespace MercadoOnlineNunitTest.RepositoryTest
 
 
         [Test]
-        public async Task GetAllPedidoByUserId() 
+        public async Task GetAllExistingPedidoByUserId_ReturnSuccess() 
         {
             int idUser = 1;
             var pedidos = await _pedidoRepository.GetAllPedidosByUserId(idUser);
@@ -32,7 +32,7 @@ namespace MercadoOnlineNunitTest.RepositoryTest
             Assert.IsTrue(pedidos.Count() > 0);
         }
         [Test]
-        public async Task GetPedidoById() 
+        public async Task GetPedidoById_ReturnSuccess() 
         {
             int idPedido = 1;
             var pedido = await _pedidoRepository.GetPedidosById(idPedido);

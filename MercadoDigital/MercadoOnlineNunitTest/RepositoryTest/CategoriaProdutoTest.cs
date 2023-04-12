@@ -25,7 +25,7 @@ namespace MercadoOnlineNunitTest.RepositoryTest
         }
 
         [Test]
-        public async Task GettingPedidos_CheckingLinkedOrderItems_LinkedSuccess()
+        public async Task GettingOrders_CheckingLinkedOrderItems_LinkedSuccess()
         {
             var categoryId = 6;
             var productsByIdCategory = (await _produtoRepository.GetAllProductsFromCategoryId(categoryId)).ToList();
