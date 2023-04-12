@@ -11,6 +11,6 @@ namespace MercadoDigital.Domain.Entities
 
         public int IdCategoria { get; set; }
         public string Nome { get; set; }
-        public List<CategoriaProduto> CategoriaProduto { get; set; } 
+        public List<CategoriaProduto>? CategoriaProduto { get; set; } 
     }
 }

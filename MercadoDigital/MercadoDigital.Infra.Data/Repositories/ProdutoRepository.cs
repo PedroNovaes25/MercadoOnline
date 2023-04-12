@@ -43,6 +43,8 @@ namespace MercadoDigital.Infra.Data.Repositories
             (
                 p => p.Produtos
                 .AsNoTracking()
+                .Include(c => c.CategoriaProduto)
+                .ThenInclude(c => c.Categoria)
                 .Where(c => c.CategoriaProduto
                 .Any(x => x.IdCategoria == idCatgoria))
                 .ToListAsync()
