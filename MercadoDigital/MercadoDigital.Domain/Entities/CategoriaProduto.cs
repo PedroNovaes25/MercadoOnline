@@ -10,9 +10,15 @@ namespace MercadoDigital.Domain.Entities
 {
     public class CategoriaProduto
     {
+        public CategoriaProduto(int idCategoria, int idProduto)
+        {
+            IdCategoria = idCategoria;
+            IdProduto = idProduto;
+        }
+
         public int IdCategoria { get; set; }
-        public Categoria Categoria { get; set; }
+        public Categoria? Categoria { get; set; }
         public int IdProduto { get; set; }
-        public Produto Produto { get; set; }
+        public Produto? Produto { get; set; }
     }
 }

@@ -9,17 +9,19 @@ namespace MercadoDigital.Domain.Entities
 {
     public class PedidoItem
     {
-        public PedidoItem(int quantidade, double subtotal)
+        public PedidoItem(int quantidade, double subtotal, int idProduto, int idPedido)
         {
             Quantidade = quantidade;
             Subtotal = subtotal;
+            IdPedido = idPedido;
+            IdProduto = idProduto;
         }
 
         public int Quantidade { get; set; }
         public double Subtotal { get; set; }
         public int IdProduto { get; set; }
-        public Produto Produto { get; set; }
+        public Produto? Produto { get; set; }
         public int IdPedido { get; set; }
-        public Pedido Pedido { get; set; }
+        public Pedido? Pedido { get; set; }
     }
 }

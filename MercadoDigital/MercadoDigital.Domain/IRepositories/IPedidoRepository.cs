@@ -9,8 +9,8 @@ namespace MercadoDigital.Domain.IRepositories
 {
     public interface IPedidoRepository
     {
-        Task<IEnumerable<Pedido>>GetAllPedidoByUserId(int userId);
-        Task<Pedido> GetPedidoById(int idPedido);
+        Task<IEnumerable<Pedido>>GetAllPedidosByUserId(int userId);
+        Task<Pedido> GetPedidosById(int idPedido);
         Task<Pedido> Create(Pedido pedido);
     }
 }

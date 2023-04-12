@@ -20,7 +20,7 @@ namespace MercadoOnlineNunitTest.RepositoryTest
         }
 
         [Test]
-        public async Task GetProdutoById()
+        public async Task GetProdutoById_ReturnSuccess()
         {
             int idProduto = 2;
             var produto = await produtoRepository.GetProductById(idProduto);
@@ -30,7 +30,7 @@ namespace MercadoOnlineNunitTest.RepositoryTest
 
 
         [Test]
-        public async Task GetProductByName()
+        public async Task GetProductByName_ReturnSuccess()
         {
             var produtos = (await produtoRepository.GetProductByName("F")).ToList();
             Assert.IsNotNull(produtos);
@@ -38,7 +38,7 @@ namespace MercadoOnlineNunitTest.RepositoryTest
         }
 
         [Test]
-        public async Task GetAllProducts()
+        public async Task GetAllExistingProducts_ReturnSuccess()
         {
             var produtos = (await produtoRepository.GetAllProducts()).ToList();
             Assert.IsNotNull(produtos);
@@ -46,7 +46,7 @@ namespace MercadoOnlineNunitTest.RepositoryTest
         }
 
         [Test]
-        public async Task Update()
+        public async Task Update_Success()
         {
             int idProduto = 2;
             var produto = await produtoRepository.GetProductById(idProduto);
@@ -56,11 +56,11 @@ namespace MercadoOnlineNunitTest.RepositoryTest
             produto.Preco = novoPreco;
 
             await produtoRepository.Update(produto);
-             Assert.That(produto.Preco, Is.EqualTo(novoPreco)); 
+            Assert.That(produto.Preco, Is.EqualTo(novoPreco)); 
         }
 
         [Test]
-        public async Task Delete()
+        public async Task DeleteById_ProductExiting_Sucess()
         {
             int idProduto = 3;
             var produto = await produtoRepository.GetProductById(idProduto);

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Infra.Data.Connection
 {
-    public abstract class RepositoryHandler : IRepositoryHandler
+    public abstract class RepositoryHandler //: IRepositoryHandler Talvez não seja necessário
     {
         private DbContextOptions<MercadoDbContext> _options { get; }
 
@@ -17,7 +17,7 @@ namespace MercadoDigital.Infra.Data.Connection
             _options = options;
         }
         
-        public async Task<T> Insert<T>(T entity) where T : class
+        private protected async Task<T> Insert<T>(T entity) where T : class
         {
             using (var context = GetNewContext())
             {
@@ -27,7 +27,7 @@ namespace MercadoDigital.Infra.Data.Connection
                 return entity;
             }
         }
-        public async Task<bool> Remove<T>(T entity) where T : class
+        private protected async Task<bool> Remove<T>(T entity) where T : class
         {
             using (var context = GetNewContext())
             {
@@ -35,14 +35,14 @@ namespace MercadoDigital.Infra.Data.Connection
                 return await SaveChangesAsync(context);
             }
         }
-        public void RemoveRange<T>(T[] models) where T : class
+        private protected void RemoveRange<T>(T[] models) where T : class
         {
             using (var context = GetNewContext())
             {
                 context.RemoveRange(models);
             }
         }
-        public async Task<bool> Updates<T>(T entity) where T : class
+        private protected async Task<bool> Updates<T>(T entity) where T : class
         {
             using (var context = GetNewContext())
             {

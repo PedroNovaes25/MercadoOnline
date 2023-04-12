@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Infra.Data.Repositories
 {
-    public class EndecoRepository : RepositoryHandler, IEnderecoRepository
+    public class EnderecoRepository : RepositoryHandler, IEnderecoRepository
     {
-        public EndecoRepository(DbContextOptions<MercadoDbContext> options) : base(options)
+        public EnderecoRepository(DbContextOptions<MercadoDbContext> options) : base(options)
         {
         }
 

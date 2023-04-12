@@ -20,8 +20,9 @@ namespace MercadoDigital.Infra.Data.Repositories
         {
             return await Insert(pedido);
         }
-        public async Task<IEnumerable<Pedido>> GetAllPedidoByUserId(int userId)
+        public async Task<IEnumerable<Pedido>> GetAllPedidosByUserId(int userId)
         {
+
             return await CommandExecuterTeste2
             (
                 p => p.Pedidos
@@ -34,7 +35,7 @@ namespace MercadoDigital.Infra.Data.Repositories
             );
             //Talvez esse where gere problema por conta do p.idusuario
         }
-        public async Task<Pedido> GetPedidoById(int idPedido)
+        public async Task<Pedido> GetPedidosById(int idPedido)
         {
             return (await CommandExecuterTeste2
             (   

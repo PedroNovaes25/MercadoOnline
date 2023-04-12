@@ -1,6 +1,7 @@
 ﻿using MercadoDigital.Domain.Entities;
 using MercadoDigital.Domain.IRepositories;
 using MercadoDigital.Infra.Data.Repositories;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace MercadoOnlineNunitTest.RepositoryTest
 {
     public class CategoriaRepositoryTest : SetupSqlLite
     {
-        private readonly CategoriaRepository _categoriaRepository;
+        private readonly ICategoriaRepository _categoriaRepository;
 
         public CategoriaRepositoryTest()
         {
@@ -19,83 +20,65 @@ namespace MercadoOnlineNunitTest.RepositoryTest
             DataSourceCategoria(_categoriaRepository).Wait();
         }
 
-        //[Test]
-        //public async Task CreateCategory()
-        //{
-        //    var categorias = new List<Categoria>()
-        //    {
-        //        new Categoria(""),
-        //        new Categoria("Carne Branca"),
-        //        new Categoria("Hortaliças"),
-        //        new Categoria("Tempero"),
-        //        new Categoria("Limpeza"),
-        //        new Categoria("Elétrica"),
-        //        new Categoria("Frios"),
-        //        new Categoria("Laticionio")
-        //    };
-
-        //    foreach (var categoria in categorias)
-        //    {
-        //        await _categoriaRepository.Insert<Categoria>(categoria);
-        //        Assert.True(categoria.IdCategoria > 0);
-        //    }
-        //}
-
         [Test]
-        public async Task UpdateCategory()
+        public async Task UpdatingExistingCategory_SuccessUpdating()
         {
-            var idFromUser = 5;
-            var caterogia = await _categoriaRepository.GetCategoryById(idFromUser);
-            int idCategoria = caterogia.IdCategoria;
-            caterogia.Nome = "Laticionios";
+            var idFromUser = 1;
+            var category = await _categoriaRepository.GetCategoryById(idFromUser);
+            int idCategory = category.IdCategoria;
+            category.Nome = "Laticionios";
 
-            var updated = await _categoriaRepository.Update(caterogia);
+            var updatedCategory = await _categoriaRepository.Update(category);
 
-            Assert.True(updated);
-            Assert.True(caterogia.IdCategoria == idCategoria);
+            Assert.True(updatedCategory);
+            Assert.True(category.IdCategoria == idCategory);
 
-            var caterogia2 = await _categoriaRepository.GetCategoryByName("Laticionios");
-            Assert.NotNull(caterogia2);
-            Assert.True(caterogia2.First().IdCategoria == idCategoria);
+            var filteredCategory = await _categoriaRepository.GetCategoryByName("Laticionios");
+            Assert.NotNull(filteredCategory);
+            Assert.True(filteredCategory.First().IdCategoria == idCategory);
         }
 
         [Test]
-        public async Task GetCategoryByName()
+        public async Task GettingCategoryThatContainsCharacters_ReturnSuccess()
         {
-            var caterogias = (await _categoriaRepository.GetCategoryByName("Car")).ToList();
+            var categories = (await _categoriaRepository.GetCategoryByName("Car")).ToList();
 
-            Assert.True(caterogias.Count() == 2);
+            Assert.IsNotNull(categories);
+            Assert.True(categories.Count() > 0);
+            var categoriesNames = categories.Select(c => c.Nome).ToList();
+            categoriesNames.ForEach(c => Assert.True(c.Contains("Car")));
         }
 
         [Test]
-        public async Task GetAllCategories()
+        public async Task ReturnAllExistingCategories_ReturnSuccess()
         {
-            var caterogias = await _categoriaRepository.GetAllCategories();
-            caterogias = caterogias.ToList();
-            Assert.NotNull(caterogias);
-            Assert.True(caterogias.Count() > 0);
+            var categories = await _categoriaRepository.GetAllCategories();
+            categories = categories.ToList();
+            Assert.NotNull(categories);
+            Assert.True(categories.Count() > 0);
         }
 
         [Test]
-        public async Task GetCategoryById()
+        public async Task GetCategoryById_ReturnsOneCategory()
         {
             int expectId = 2;
-            var caterogias = await _categoriaRepository.GetCategoryById(expectId);
+            var category = await _categoriaRepository.GetCategoryById(expectId);
 
-            Assert.NotNull(caterogias);
-            Assert.True(caterogias.IdCategoria == expectId);
+            Assert.NotNull(category);
+            Assert.True(category.IdCategoria == expectId);
         }
 
         [Test]
-        public async Task DeleteCategory()
+        public async Task DeleteCategory_ReturnTrue()
         {
-            int idCategoria = 8;
-            var caterogia = await _categoriaRepository.GetCategoryById(idCategoria);
-            var deleted = await _categoriaRepository.Remove(caterogia);
+            int idCategoria = 3;
+            var category = await _categoriaRepository.GetCategoryById(idCategoria);
+            var deleted = await _categoriaRepository.Delete(category);
             Assert.IsTrue(deleted);
 
-            var categoriaV2 = await _categoriaRepository.GetCategoryById(idCategoria);
-            Assert.IsNull(categoriaV2);
+            var filteredCategory = await _categoriaRepository.GetCategoryById(idCategoria);
+            Assert.IsNull(filteredCategory);
         }
+ 
     }
 }
