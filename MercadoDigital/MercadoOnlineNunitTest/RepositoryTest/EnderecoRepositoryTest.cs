@@ -69,14 +69,17 @@ namespace MercadoOnlineNunitTest.RepositoryTest
 
         private void CreateEnderecos() 
         {
-            var users = CreateUsers(_userRepository).Result;
-
+            for (int i = 0; i < 4; i++)
+            {
+                CreateUser(_userRepository, SourceUsuarios[i]).Wait();
+            }
+            
             var addresses = new List<Endereco>()
             {
-                new Endereco("12345678", "Rua 1", 15, "Bairro A", "Cidade A", "TO", users[0].IdUsuario),
-                new Endereco("87654321", "Rua 2", 14, "Bairro B", "Cidade B", "MS", users[1].IdUsuario),
-                new Endereco("123654789", "Rua 3", 16, "Bairro C", "Cidade C", "MT", users[2].IdUsuario),
-                new Endereco("987456123", "Rua 4", 16, "Bairro D", "Cidade D", "MG", users[3].IdUsuario),
+                new Endereco("12345678", "Rua 1", 15, "Bairro A", "Cidade A", "TO", SourceUsuarios[0].IdUsuario),
+                new Endereco("87654321", "Rua 2", 14, "Bairro B", "Cidade B", "MS", SourceUsuarios[1].IdUsuario),
+                new Endereco("123654789", "Rua 3", 16, "Bairro C", "Cidade C", "MT", SourceUsuarios[2].IdUsuario),
+                new Endereco("987456123", "Rua 4", 16, "Bairro D", "Cidade D", "MG", SourceUsuarios[3].IdUsuario),
             };
             
             foreach (var address in addresses) 

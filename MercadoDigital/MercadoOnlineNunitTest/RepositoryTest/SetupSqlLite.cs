@@ -55,19 +55,13 @@ namespace MercadoOnlineNunitTest.RepositoryTest
         }
 
         //ok
-        public async Task<List<Usuario>> CreateUsers(IUsuarioRepository usuarioRepository)
+        public async Task CreateUser(IUsuarioRepository usuarioRepository, Usuario usuario)
         {
-            List<Usuario> users = new List<Usuario>();
-
-            foreach (var item in _dataSourceUsuario)
-            {
-                users.Add(await usuarioRepository.Create(item));
-            }
-            return users;
+            await usuarioRepository.Create(usuario);
         }
         
         //ok
-        public async Task<Endereco> DataSourceEndereco(IEnderecoRepository enderecoRepository, Endereco endereco)
+        public async Task<bool> DataSourceEndereco(IEnderecoRepository enderecoRepository, Endereco endereco)
         {
             return await enderecoRepository.Create(endereco);
         }
@@ -79,21 +73,20 @@ namespace MercadoOnlineNunitTest.RepositoryTest
         }
 
         //ok
-        public async Task<Pedido> DataSourcePedido(IPedidoRepository pedidoRepository, double valorPedido, DateTime dataCompra, Usuario usuario)
+        public async Task<bool> DataSourcePedido(IPedidoRepository pedidoRepository, Pedido pedido)
         {
-            var pedido = new Pedido(valorPedido, dataCompra, usuario.IdUsuario);
             return await pedidoRepository.Create(pedido);
         }
 
         //
-        public async Task<CategoriaProduto> DataSourceCategoriaProduto(ICategoriaProdutoRepository categoriaProdutoRepository, Categoria categoria, Produto produto) 
+        public async Task<bool> DataSourceCategoriaProduto(ICategoriaProdutoRepository categoriaProdutoRepository, Categoria categoria, Produto produto) 
         {
             var categoriaProduto = new CategoriaProduto(categoria.IdCategoria, produto.IdProduto);
             return await categoriaProdutoRepository.Create(categoriaProduto);
         }
 
         //ok
-        public async Task<PedidoItem> DataSourcePedidoItem(IPedidoItemRepository pedidoItemRepository, int quantidade, double subtotal, Pedido pedido, Produto produto)
+        public async Task<bool> DataSourcePedidoItem(IPedidoItemRepository pedidoItemRepository, int quantidade, double subtotal, Pedido pedido, Produto produto)
         {
             var pedidoItem = new PedidoItem(quantidade, subtotal, produto.IdProduto, pedido.IdPedido);
             return await pedidoItemRepository.Create(pedidoItem);
@@ -123,7 +116,7 @@ namespace MercadoOnlineNunitTest.RepositoryTest
             new Categoria("Limpeza")
         };
 
-        private List<Usuario> _dataSourceUsuario = new List<Usuario>()
+        public List<Usuario> SourceUsuarios = new List<Usuario>()
         {
             new Usuario("Felipe", "38405125", "4832562565", new DateTime(2000, 04, 25), IdadeAtual(2000), "M", "119459494", "Felipe@gmail.com", "123456"),
             new Usuario("Pedro", "38405125", "4832562565", new DateTime(2004, 08, 14), IdadeAtual(2004), "M", "119459494", "Pedro@gmail.com", "123456"),

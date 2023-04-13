@@ -12,7 +12,7 @@ namespace MercadoDigital.Domain.IRepositories
         Task<IEnumerable<Categoria>> GetAllCategories();
         Task<IEnumerable<Categoria>> GetCategoryByName(string name);
         Task<Categoria> GetCategoryById(int idCategory);
-        Task<Categoria> Create(Categoria categoria);
+        Task<bool> Create(Categoria categoria);
         Task<bool> Update(Categoria categoria);
         Task<bool> Delete(Categoria categoria);
     }

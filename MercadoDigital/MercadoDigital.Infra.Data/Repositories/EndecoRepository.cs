@@ -16,7 +16,7 @@ namespace MercadoDigital.Infra.Data.Repositories
         {
         }
 
-        public async Task<Endereco> Create(Endereco endereco)
+        public async Task<bool> Create(Endereco endereco)
         {
             return await Insert(endereco);
         }

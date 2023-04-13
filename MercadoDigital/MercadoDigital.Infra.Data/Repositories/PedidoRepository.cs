@@ -16,7 +16,7 @@ namespace MercadoDigital.Infra.Data.Repositories
         {
         }
 
-        public async Task<Pedido> Create(Pedido pedido)
+        public async Task<bool> Create(Pedido pedido)
         {
             return await Insert(pedido);
         }

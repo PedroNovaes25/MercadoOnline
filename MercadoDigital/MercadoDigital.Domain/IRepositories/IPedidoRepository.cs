@@ -11,6 +11,6 @@ namespace MercadoDigital.Domain.IRepositories
     {
         Task<IEnumerable<Pedido>>GetAllPedidosByUserId(int userId);
         Task<Pedido> GetPedidosById(int idPedido);
-        Task<Pedido> Create(Pedido pedido);
+        Task<bool> Create(Pedido pedido);
     }
 }

@@ -17,14 +17,12 @@ namespace MercadoDigital.Infra.Data.Connection
             _options = options;
         }
         
-        private protected async Task<T> Insert<T>(T entity) where T : class
+        private protected async Task<bool> Insert<T>(T entity) where T : class
         {
             using (var context = GetNewContext())
             {
                 context.Add<T>(entity);
-                await SaveChangesAsync(context);
-
-                return entity;
+                return await SaveChangesAsync(context);
             }
         }
         private protected async Task<bool> Remove<T>(T entity) where T : class

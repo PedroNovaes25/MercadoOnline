@@ -43,11 +43,13 @@ namespace MercadoOnlineNunitTest.RepositoryTest
 
         private void CreatePedido() 
         {
-            var user = CreateUsers(_userRepository).Result.First();
+            CreateUser(_userRepository, SourceUsuarios[1]).Wait();
+            var user = _userRepository.GetById(SourceUsuarios[1].IdUsuario).Result;
 
             for (int i = -1; i < 3; i++)
             {
-                DataSourcePedido(_pedidoRepository, 20 * (i+1), DateTime.UtcNow.AddDays(1), user).Wait();
+                var order = new Pedido(20 * (i + 1), DateTime.UtcNow.AddDays(1), user.IdUsuario);
+                DataSourcePedido(_pedidoRepository, order).Wait();
             }
         }
 
