@@ -21,7 +21,6 @@ namespace MercadoOnlineNunitTest.RepositoryTest
             CreatePedido();
         }
 
-
         [Test]
         public async Task GetAllExistingPedidoByUserId_ReturnSuccess() 
         {

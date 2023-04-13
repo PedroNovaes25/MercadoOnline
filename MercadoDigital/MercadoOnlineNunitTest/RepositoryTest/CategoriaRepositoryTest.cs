@@ -69,7 +69,7 @@ namespace MercadoOnlineNunitTest.RepositoryTest
         }
 
         [Test]
-        public async Task DeleteCategory_ReturnTrue()
+        public async Task DeleteExistingCategory_ReturnTrue()
         {
             int idCategoria = 3;
             var category = await _categoriaRepository.GetCategoryById(idCategoria);
@@ -79,6 +79,14 @@ namespace MercadoOnlineNunitTest.RepositoryTest
             var filteredCategory = await _categoriaRepository.GetCategoryById(idCategoria);
             Assert.IsNull(filteredCategory);
         }
- 
+
+        [Test]
+        public async Task GetCategoryById_NotExists()
+        {
+            int expectId = 50;
+            var category =  await _categoriaRepository.GetCategoryById(expectId);
+
+            Assert.IsNull(category, "Deveria retornar vazio");
+        }
     }
 }
