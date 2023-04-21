@@ -10,27 +10,30 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Infra.Data.Repositories
 {
-    public class EnderecoRepository : RepositoryHandler, IEnderecoRepository
+    public class EnderecoRepository : IEnderecoRepository
     {
-        public EnderecoRepository(DbContextOptions<MercadoDbContext> options) : base(options)
+        private readonly IGeneralRepository<MercadoDbContext> _generalRepository;
+
+        public EnderecoRepository(IGeneralRepository<MercadoDbContext> generalRepository)
         {
+            _generalRepository = generalRepository;
         }
 
         public async Task<Endereco> Create(Endereco endereco)
         {
-            return await Insert(endereco);
+            return await _generalRepository.Insert(endereco);
         }
         public async Task<bool> Delete(Endereco endereco)
         {
-            return await Remove(endereco);
+            return await _generalRepository.Remove(endereco);
         }
         public async Task<bool> Update(Endereco endereco)
         {
-            return await Updates(endereco);
+            return await _generalRepository.Update(endereco);
         }
         public async Task<Endereco> GetEnderecoById(int idEndereco)
         {
-            return (await CommandExecuterTeste2
+            return (await _generalRepository.CommandExecuter
             (
                 e => e.Enderecos.AsNoTracking()
                 .Where(e => e.IdEndereco == idEndereco).FirstOrDefaultAsync()

@@ -10,27 +10,29 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Infra.Data.Repositories
 {
-    public class ProdutoRepository : RepositoryHandler, IProdutoRepository
+    public class ProdutoRepository : IProdutoRepository
     {
-        public ProdutoRepository(DbContextOptions<MercadoDbContext> options) : base(options)
-        {
-        }
+        private readonly IGeneralRepository<MercadoDbContext> _generalRepository;
 
+        public ProdutoRepository(IGeneralRepository<MercadoDbContext> generalRepository)
+        {
+            _generalRepository = generalRepository;
+        }
         public async Task<Produto> Create(Produto produto)
         {
-            return await Insert(produto);
+            return await _generalRepository.Insert(produto);
         }
         public async Task<bool> Delete(Produto produto)
         {
-            return await Remove(produto);
+            return await _generalRepository.Remove(produto);
         }
         public async Task<bool> Update(Produto produto)
         {
-            return await Updates(produto);
+            return await _generalRepository.Update(produto);
         }
         public async Task<IEnumerable<Produto>> GetAllProducts()
         {
-            return await CommandExecuterTeste2
+            return await _generalRepository.CommandExecuter
             (
                 p => p.Produtos
                 .AsNoTracking()
@@ -39,7 +41,7 @@ namespace MercadoDigital.Infra.Data.Repositories
         }
         public async Task<IEnumerable<Produto>> GetAllProductsFromCategoryId(int idCatgoria)
         {
-            return await CommandExecuterTeste2
+            return await _generalRepository.CommandExecuter
             (
                 p => p.Produtos
                 .AsNoTracking()
@@ -52,8 +54,8 @@ namespace MercadoDigital.Infra.Data.Repositories
         }
         public async Task<Produto> GetProductById(int idProduto)
         {
-            return (await CommandExecuterTeste2
-            (   
+            return (await _generalRepository.CommandExecuter
+            (
                 p => p.Produtos
                 .AsNoTracking()
                 .Where(p => p.IdProduto == idProduto)
@@ -62,7 +64,7 @@ namespace MercadoDigital.Infra.Data.Repositories
         }
         public async Task<IEnumerable<Produto>> GetProductByName(string name)
         {
-            return await CommandExecuterTeste2
+            return await _generalRepository.CommandExecuter
             (
                 p => p.Produtos
                 .AsNoTracking()

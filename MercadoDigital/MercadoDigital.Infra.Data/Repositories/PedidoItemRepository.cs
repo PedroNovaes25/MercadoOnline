@@ -10,15 +10,18 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Infra.Data.Repositories
 {
-    public class PedidoItemRepository : RepositoryHandler, IPedidoItemRepository
+    public class PedidoItemRepository : IPedidoItemRepository
     {
-        public PedidoItemRepository(DbContextOptions<MercadoDbContext> options) : base(options)
+        private readonly IGeneralRepository<MercadoDbContext> _generalRepository;
+
+        public PedidoItemRepository(IGeneralRepository<MercadoDbContext> generalRepository)
         {
+            _generalRepository = generalRepository;
         }
 
         public async Task<PedidoItem> Create(PedidoItem pedidoItem)
         {
-            return await Insert(pedidoItem);
+            return await _generalRepository.Insert(pedidoItem);
         }
     }
 }

@@ -10,29 +10,32 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Infra.Data.Repositories
 {
-    public class UsuarioRepository : RepositoryHandler, IUsuarioRepository
+    public class UsuarioRepository : IUsuarioRepository
     {
-        public UsuarioRepository(DbContextOptions<MercadoDbContext> options) : base(options)
+        private readonly IGeneralRepository<MercadoDbContext> _generalRepository;
+
+        public UsuarioRepository(IGeneralRepository<MercadoDbContext> generalRepository)
         {
+            _generalRepository = generalRepository;
         }
 
         public async Task<Usuario> Create(Usuario usuario)
         {
-            return await Insert(usuario);
+            return await _generalRepository.Insert(usuario);
         }
 
         public async Task<bool> Delete(Usuario usuario)
         {
-            return await Remove(usuario);
+            return await _generalRepository.Remove(usuario);
         }
 
         public async Task<bool> Update(Usuario usuario)
         {
-            return await Updates(usuario);
+            return await _generalRepository.Update(usuario);
         }
         public async Task<Usuario> GetById(int usuarioId)
         {
-            return (await CommandExecuterTeste2
+            return (await _generalRepository.CommandExecuter
             (
                 u => u.Usuarios
                 .AsNoTracking()

@@ -10,39 +10,40 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Infra.Data.Repositories
 {
-    public class CategoriaRepository : RepositoryHandler, ICategoriaRepository
+    public class CategoriaRepository : ICategoriaRepository
     {
-        public CategoriaRepository(DbContextOptions<MercadoDbContext> options) : base(options)
+        private readonly IGeneralRepository<MercadoDbContext> _generalRepository;
+
+        public CategoriaRepository(IGeneralRepository<MercadoDbContext> generalRepository)
         {
+            _generalRepository = generalRepository;
         }
 
         public async Task<Categoria> Create(Categoria categoria)
         {
-            return await Insert(categoria);
+            return await _generalRepository.Insert(categoria);
         }
         public async Task<bool> Delete(Categoria categoria)
         {
-            return await Remove(categoria);
+            return await _generalRepository.Remove(categoria);
         }
         public async Task<bool> Update(Categoria categoria)
         {
-            return await Updates(categoria);
+            return await _generalRepository.Update(categoria);
         }
         public async Task<IEnumerable<Categoria>> GetAllCategories()
         {
-            var commandResult = await CommandExecuterTeste1
-                (
-                    x => x.Categorias.AsNoTracking()
-                    .OrderBy(c => c.Nome)
-                    .ToListAsync()
-                );
-
-            return await commandResult;
+            return await _generalRepository.CommandExecuter
+            (
+                x => x.Categorias.AsNoTracking()
+                .OrderBy(c => c.Nome)
+                .ToListAsync()
+            );
         }
-        //Verificar qual é a melhor abordagem CommandExecuterTeste2 ou CommandExecuterTeste1
+
         public async Task<Categoria> GetCategoryById(int idCategory)
         {
-            return (await CommandExecuterTeste2
+            return (await _generalRepository.CommandExecuter
             (
                 c => c.Categorias.AsNoTracking()
                 .Where(c => c.IdCategoria == idCategory)
@@ -51,15 +52,13 @@ namespace MercadoDigital.Infra.Data.Repositories
         }
         public async Task<IEnumerable<Categoria>> GetCategoryByName(string name)
         {
-            var commandResult = await CommandExecuterTeste1
-                (
-                    c => c.Categorias.AsNoTracking()
-                    .OrderBy(c => c.Nome)
-                    .Where(c => c.Nome.ToUpper().Contains(name.ToUpper()))
-                    .ToListAsync()
-                );
-
-              return await commandResult;
+            return await _generalRepository.CommandExecuter
+            (
+                c => c.Categorias.AsNoTracking()
+                .OrderBy(c => c.Nome)
+                .Where(c => c.Nome.ToUpper().Contains(name.ToUpper()))
+                .ToListAsync()
+            );
         }
     }
 }
