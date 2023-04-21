@@ -18,8 +18,8 @@ namespace MercadoOnlineNunitTest.RepositoryTest
 
         public EstoqueRepositoryTest()
         {
-            _estoqueRepository = new EstoqueRepository(_contextOptions);
-            _produtoRepository = new ProdutoRepository(_contextOptions);
+            _estoqueRepository = new EstoqueRepository(new GeneralRepository(Context));
+            _produtoRepository = new ProdutoRepository(new GeneralRepository(Context));
             CreateEstoque();
         }
 

@@ -17,8 +17,8 @@ namespace MercadoOnlineNunitTest.RepositoryTest
 
         public EnderecoRepositoryTest()
         {
-            _enderecoRepository = new EnderecoRepository(_contextOptions);
-            _userRepository = new UsuarioRepository(_contextOptions);
+            _enderecoRepository = new EnderecoRepository(new GeneralRepository(Context));
+            _userRepository = new UsuarioRepository(new GeneralRepository(Context));
             CreateEnderecos();
         }
 
@@ -73,10 +73,10 @@ namespace MercadoOnlineNunitTest.RepositoryTest
 
             var addresses = new List<Endereco>()
             {
-                new Endereco("12345678", "Rua 1", 15, "Bairro A", "Cidade A", "TO", users[0].IdUsuario),
-                new Endereco("87654321", "Rua 2", 14, "Bairro B", "Cidade B", "MS", users[1].IdUsuario),
-                new Endereco("123654789", "Rua 3", 16, "Bairro C", "Cidade C", "MT", users[2].IdUsuario),
-                new Endereco("987456123", "Rua 4", 16, "Bairro D", "Cidade D", "MG", users[3].IdUsuario),
+                new Endereco("12345678", "Rua 1", "15", "Bairro A", "Cidade A", "TO", users[0].IdUsuario),
+                new Endereco("87654321", "Rua 2", "14", "Bairro B", "Cidade B", "MS", users[1].IdUsuario),
+                new Endereco("123654789", "Rua 3", "16", "Bairro C", "Cidade C", "MT", users[2].IdUsuario),
+                new Endereco("987456123", "Rua 4", "16", "Bairro D", "Cidade D", "MG", users[3].IdUsuario),
             };
             
             foreach (var address in addresses) 

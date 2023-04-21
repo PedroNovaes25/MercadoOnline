@@ -16,8 +16,8 @@ namespace MercadoOnlineNunitTest.RepositoryTest
 
         public PedidoRepositoryTest()
         {
-            _pedidoRepository = new PedidoRepository(_contextOptions);
-            _userRepository = new UsuarioRepository(_contextOptions);
+            _pedidoRepository = new PedidoRepository(new GeneralRepository(Context));
+            _userRepository = new UsuarioRepository(new GeneralRepository(Context));
             CreatePedido();
         }
 

@@ -1,6 +1,5 @@
 using MercadoDigital.Domain.Entities;
 using MercadoDigital.Domain.IRepositories;
-using MercadoDigital.Domain.IRepositories.Handler;
 using MercadoDigital.Infra.Data.Connection;
 using MercadoDigital.Infra.Data.Repositories;
 using Microsoft.Data.Sqlite;

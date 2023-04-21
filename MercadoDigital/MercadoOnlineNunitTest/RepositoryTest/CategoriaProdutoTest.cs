@@ -17,9 +17,9 @@ namespace MercadoOnlineNunitTest.RepositoryTest
 
         public CategoriaProdutoTest()
         {
-            _categoriaProdutoRepository = new CategoriaProdutoRepository(_contextOptions);
-            _produtoRepository = new ProdutoRepository(_contextOptions);
-            _categoriaRepository = new CategoriaRepository(_contextOptions);
+            _categoriaProdutoRepository = new CategoriaProdutoRepository(new GeneralRepository(Context));
+            _produtoRepository = new ProdutoRepository(new GeneralRepository(Context));
+            _categoriaRepository = new CategoriaRepository(new GeneralRepository(Context));
 
             CreateCategoriaPedido();
         }

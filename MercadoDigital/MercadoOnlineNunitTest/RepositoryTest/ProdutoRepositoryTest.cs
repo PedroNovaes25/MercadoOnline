@@ -15,7 +15,7 @@ namespace MercadoOnlineNunitTest.RepositoryTest
 
         public ProdutoRepositoryTest()
         {
-            produtoRepository = new ProdutoRepository(_contextOptions);
+            produtoRepository = new ProdutoRepository(new GeneralRepository(Context));
             DataSourceProduto(produtoRepository).Wait();
         }
 

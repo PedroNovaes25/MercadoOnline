@@ -18,10 +18,10 @@ namespace MercadoOnlineNunitTest.RepositoryTest
 
         public PedidoItemRepositoryTest()
         {
-            _pedidoRepository = new PedidoRepository(_contextOptions);
-            _ProdutoRepository = new ProdutoRepository(_contextOptions);
-            _pedidoItemRepository = new PedidoItemRepository(_contextOptions);
-            _userRepository = new UsuarioRepository(_contextOptions);
+            _pedidoRepository = new PedidoRepository(new GeneralRepository(Context));
+            _ProdutoRepository = new ProdutoRepository(new GeneralRepository(Context));
+            _pedidoItemRepository = new PedidoItemRepository(new GeneralRepository(Context));
+            _userRepository = new UsuarioRepository(new GeneralRepository(Context));
 
             CreateOrderItem();
         }

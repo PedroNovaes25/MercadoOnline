@@ -16,7 +16,7 @@ namespace MercadoOnlineNunitTest.RepositoryTest
 
         public CategoriaRepositoryTest()
         {
-            _categoriaRepository = new CategoriaRepository(_contextOptions);
+            _categoriaRepository = new CategoriaRepository(new GeneralRepository(Context));
             DataSourceCategoria(_categoriaRepository).Wait();
         }
 
