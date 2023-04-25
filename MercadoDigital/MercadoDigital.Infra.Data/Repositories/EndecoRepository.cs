@@ -19,7 +19,7 @@ namespace MercadoDigital.Infra.Data.Repositories
             _generalRepository = generalRepository;
         }
 
-        public async Task<Endereco> Create(Endereco endereco)
+        public async Task<bool> Create(Endereco endereco)
         {
             return await _generalRepository.Insert(endereco);
         }

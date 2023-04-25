@@ -19,7 +19,7 @@ namespace MercadoDigital.Infra.Data.Repositories
             _generalRepository = generalRepository;
         }
 
-        public async Task<Categoria> Create(Categoria categoria)
+        public async Task<bool> Create(Categoria categoria)
         {
             return await _generalRepository.Insert(categoria);
         }

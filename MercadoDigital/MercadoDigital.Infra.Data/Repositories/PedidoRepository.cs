@@ -18,7 +18,7 @@ namespace MercadoDigital.Infra.Data.Repositories
         {
             _generalRepository = generalRepository;
         }
-        public async Task<Pedido> Create(Pedido pedido)
+        public async Task<bool> Create(Pedido pedido)
         {
             return await _generalRepository.Insert(pedido);
         }

@@ -18,12 +18,12 @@ namespace MercadoDigital.Infra.Data.Repositories
             _context = options;
         }
 
-        public async Task<Entity> Insert<Entity>(Entity entity) where Entity : class
+        public async Task<bool> Insert<Entity>(Entity entity) where Entity : class
         {
             _context.Add(entity);
-            await _context.SaveChangesAsync();
+            var saved = await _context.SaveChangesAsync();
 
-            return entity;
+            return saved > 0;
         }
         public async Task<bool> Remove<Entity>(Entity entity) where Entity : class
         {
@@ -39,7 +39,6 @@ namespace MercadoDigital.Infra.Data.Repositories
             _context.Update(entity);
             return (await _context!.SaveChangesAsync()) > 0;
         }
-
         public TValue CommandExecuter<TValue>(Func<MercadoDbContext, TValue> action)
         {
             return action.Invoke(_context);

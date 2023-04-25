@@ -13,7 +13,7 @@ namespace MercadoDigital.Domain.IRepositories
         Task<IEnumerable<Produto>> GetAllProductsFromCategoryId(int idCatgoria);
         Task<Produto> GetProductById(int idProduto);
         Task<IEnumerable<Produto>> GetProductByName(string name);
-        Task<Produto> Create(Produto produto);
+        Task<bool> Create(Produto produto);
         Task<bool> Update(Produto produto);
         Task<bool> Delete(Produto produto);
     }

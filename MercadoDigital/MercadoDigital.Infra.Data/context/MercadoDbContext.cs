@@ -18,12 +18,12 @@ namespace MercadoDigital.Infra.Data.Connection
         public MercadoDbContext(DbContextOptions<MercadoDbContext> options) : base(options)
         {
         }
-        public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<Produto> Produtos { get; set; }
-        public DbSet<Pedido> Pedidos { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Endereco> Enderecos { get; set; }
-        public DbSet<Estoque> Estoques { get; set; }
+        public virtual DbSet<Categoria> Categorias { get; set; }
+        public virtual DbSet<Produto> Produtos { get; set; }
+        public virtual DbSet<Pedido> Pedidos { get; set; }
+        public virtual DbSet<Usuario> Usuarios { get; set; }
+        public virtual DbSet<Endereco> Enderecos { get; set; }
+        public virtual DbSet<Estoque> Estoques { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

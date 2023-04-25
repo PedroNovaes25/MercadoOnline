@@ -9,6 +9,6 @@ namespace MercadoDigital.Domain.IRepositories
 {
     public interface ICategoriaProdutoRepository
     {
-        Task<CategoriaProduto> Create(CategoriaProduto categoriaProduto);
+        Task<bool> Create(CategoriaProduto categoriaProduto);
     }
 }

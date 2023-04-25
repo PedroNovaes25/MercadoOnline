@@ -19,7 +19,7 @@ namespace MercadoDigital.Infra.Data.Repositories
             _generalRepository = generalRepository;
         }
 
-        public async Task<Usuario> Create(Usuario usuario)
+        public async Task<bool> Create(Usuario usuario)
         {
             return await _generalRepository.Insert(usuario);
         }
