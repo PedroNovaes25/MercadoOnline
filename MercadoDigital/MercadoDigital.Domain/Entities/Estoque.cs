@@ -15,13 +15,6 @@ namespace MercadoDigital.Domain.Entities
             IdProduto = idProduto;
         }
 
-        public Estoque(int idEstoque, int quantidade, int idProduto)
-        {
-            Quantidade = quantidade;
-            IdProduto = idProduto;
-            IdEstoque = idEstoque;
-        }
-
         public int IdEstoque { get; set; }
         public int Quantidade { get; set; }
         public int IdProduto { get; set; }
