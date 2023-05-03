@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Application.DTO.Output
 {
-    internal class PedidoOutputDTO
+    public class PedidoOutputDTO
     {
+        //Pedido
         public int IdPedido { get; set; }
         public double ValorPedido { get; set; }
         public DateTime DataCompra { get; set; }
         public int IdUsuario { get; set; }
-        public List<PedidoItemOutput> PedidoItems { get; set; }
+
+        //PedidoItem
+        public List<PedidoItemOutputDTO> PedidoItemDTO { get; set; }
     }
 }

@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Application.IServices
 {
-    internal interface IPedidoService
+    public interface IPedidoService
     {
         Task<IEnumerable<PedidoOutputDTO>> GetAllPedidosByUserId(int userId);
         Task<PedidoOutputDTO> GetPedidosById(int idPedido);
-        Task<bool> Create(PedidoInputDTO pedido);
+        Task<bool> Create(PedidoInputDTO pedidoDTO);
     }
 }

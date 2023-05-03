@@ -4,9 +4,11 @@ namespace MercadoDigital.Application.DTO.Output
 {
     public class PedidoItemOutputDTO
     {
-        public int IdProduto { get; set; }
+        //PedidoItem
         public int Quantidade { get; set; }
         public double Subtotal { get; set; }
+        //Produto
+        public int IdProduto { get; set; }
         public string Nome { get; set; }
         public DateTime Vencimento { get; set; }
         public string Descricao { get; set; }

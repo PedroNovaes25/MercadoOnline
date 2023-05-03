@@ -1,4 +1,5 @@
-﻿using MercadoDigital.Application.DTO.Input;
+﻿using AutoMapper;
+using MercadoDigital.Application.DTO.Input;
 using MercadoDigital.Application.DTO.Output;
 using MercadoDigital.Application.IServices;
 using MercadoDigital.Domain.IRepositories;
@@ -13,14 +14,16 @@ namespace MercadoDigital.Application.Services
     public class CategoriaService : ICategoriaService
     {
         private readonly ICategoriaRepository _categoriaRepository;
+        private readonly IMapper _mapper;
 
-        public CategoriaService(ICategoriaRepository categoriaRepository)
+        public CategoriaService(ICategoriaRepository categoriaRepository, IMapper mapper)
         {
             _categoriaRepository = categoriaRepository;
+            _mapper = mapper;
         }
         public async Task<bool> Create(CategoriaInputDTO categoriaDTO)
         {
-            throw new NotImplementedException();
+            
         }
 
         public async Task<bool> Delete(int idCategoria)

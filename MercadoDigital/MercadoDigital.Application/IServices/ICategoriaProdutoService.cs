@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Application.IServices
 {
-    internal interface ICategoriaProdutoService
+    public interface ICategoriaProdutoService
     {
         Task<bool> Create(CategoriaProdutoInputDTO categoriaProdutoDTO);
     }
