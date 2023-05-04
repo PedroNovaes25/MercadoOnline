@@ -40,12 +40,14 @@ namespace MercadoDigital.Application.Services
             try
             {
                 var pedidos = await _pedidoRepository.GetAllPedidosByUserId(userId);
+                if (pedidos == null)
+                    throw new InvalidOperationException($"Não foram encontradas pedidos pertencentes ao UserID '{userId}'  .");
 
-                throw new NotImplementedException();
+                return _mapper.Map<IEnumerable<PedidoOutputDTO>>(pedidos);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw new Exception(e.Message);
             }
         }
 
@@ -53,11 +55,15 @@ namespace MercadoDigital.Application.Services
         {
             try
             {
-                throw new NotImplementedException();
+                var pedido = await _pedidoRepository.GetPedidosById(idPedido);
+                if (pedido == null)
+                    throw new InvalidOperationException($"Não foram encontradas pedidos com ID '{idPedido}'.");
+
+                return _mapper.Map<PedidoOutputDTO>(pedido);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw new Exception(e.Message);
             }
         }
     }
