@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MercadoDigital.Application\MercadoDigital.Application.csproj" />
     <ProjectReference Include="..\MercadoDigital.Domain\MercadoDigital.Domain.csproj" />
     <ProjectReference Include="..\MercadoDigital.Infra.Data\MercadoDigital.Infra.Data.csproj" />

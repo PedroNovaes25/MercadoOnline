@@ -15,26 +15,26 @@ namespace MercadoDigital.Application.Mappings
         public MapperProfile()
         {
             //Input Mapper
-            CreateMap<CategoriaInputDTO, Categoria>();
-            CreateMap<EnderecoInputDTO, Endereco>();
-            CreateMap<EstoqueInputDTO, Estoque>();
-            CreateMap<PedidoInputDTO, Pedido>();
-            CreateMap<PedidoItemInputDTO, PedidoItem>();
-            CreateMap<ProdutoInputDTO, Produto>();
-            CreateMap<UsuarioInputDTO, Usuario>();
+            CreateMap<CategorynputDTO, Categoria>();
+            CreateMap<AddressInputDTO, Endereco>();
+            CreateMap<StockInputDTO, Estoque>();
+            CreateMap<OrderInputDTO, Pedido>();
+            CreateMap<OrderItemInputDTO, PedidoItem>();
+            CreateMap<ProductInputDTO, Produto>();
+            CreateMap<UserInputDTO, Usuario>();
 
             //Output Mapper
-            CreateMap<Categoria, CategoriaOutputDTO>();
-            CreateMap<Endereco, EnderecoOutputDTO>();
-            CreateMap<Produto, ProdutoOutputDTO>();
-            CreateMap<Usuario, UsuarioOutputDTO>();
+            CreateMap<Categoria, CategoryOutputDTO>();
+            CreateMap<Endereco, AddressOutputDTO>();
+            CreateMap<Produto, ProductOutputDTO>();
+            CreateMap<Usuario, UserOutputDTO>();
             
             //Configurar, retorno personalizado
-            CreateMap<Pedido, PedidoOutputDTO>()
+            CreateMap<Pedido, OrderOutputDTO>()
                 .ForMember(dest => dest.PedidoItemDTO, ppi => ppi.MapFrom(orig => orig.PedidoItem));
 
             //mapear tipo complexo para tipo primitivo
-            CreateMap<Estoque, EstoqueProdutoOutputDTO>()
+            CreateMap<Estoque, StockProductOutputDTO>()
                 .ForMember(dest => dest.IdProduto, ep => ep.MapFrom(orig => orig.Produto.IdProduto))
                 .ForMember(dest => dest.ProdutoNome, ep => ep.MapFrom(orig => orig.Produto.Nome))
                 .ForMember(dest => dest.Vencimento, ep => ep.MapFrom(orig => orig.Produto.Vencimento))
@@ -42,7 +42,7 @@ namespace MercadoDigital.Application.Mappings
                 .ForMember(dest => dest.Preco, ep => ep.MapFrom(orig => orig.Produto.Preco));
 
             //mapear tipo complexo para tipo primitivo
-            CreateMap<PedidoItem, PedidoItemOutputDTO>()
+            CreateMap<PedidoItem, OrderItemOutputDTO>()
                 .ForMember(dest => dest.IdProduto, pi => pi.MapFrom(orig => orig.Produto.IdProduto))
                 .ForMember(dest => dest.Nome, pi => pi.MapFrom(orig => orig.Produto.Nome))
                 .ForMember(dest => dest.Vencimento, pi => pi.MapFrom(orig => orig.Produto.Vencimento))

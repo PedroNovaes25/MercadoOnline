@@ -16,12 +16,12 @@ namespace MercadoOnline.TesteUnidade
 {
     public class EnderecoRepositoryTest
     {
-        private readonly Mock<IEnderecoRepository> _mockEnderecoRepo;
+        private readonly Mock<IAddressRepository> _mockEnderecoRepo;
 
 
         public EnderecoRepositoryTest()
         {
-            _mockEnderecoRepo = new Mock<IEnderecoRepository>();
+            _mockEnderecoRepo = new Mock<IAddressRepository>();
         }
 
         [Fact]
@@ -65,10 +65,10 @@ namespace MercadoOnline.TesteUnidade
 
             var endereco = new Endereco("0808080", "Rua 1", "5", "Bairro 1", "Cidade 1", "UF", idUsuario);
             endereco.IdEndereco = idEndereco;
-             _mockEnderecoRepo.Setup(x => x.GetEnderecoById(It.IsAny<int>())).ReturnsAsync(endereco);
+             _mockEnderecoRepo.Setup(x => x.GetAddressById(It.IsAny<int>())).ReturnsAsync(endereco);
             
             //Act
-            var enderecoById = await _mockEnderecoRepo.Object.GetEnderecoById(idEndereco);
+            var enderecoById = await _mockEnderecoRepo.Object.GetAddressById(idEndereco);
 
             //Assert
             Assert.NotNull(_mockEnderecoRepo.Object);
@@ -82,9 +82,9 @@ namespace MercadoOnline.TesteUnidade
             //Arrange
             var idAny = 10;
             //Act
-            _mockEnderecoRepo.Setup(x => x.GetEnderecoById(It.IsAny<int>())).ReturnsAsync(() => null);
+            _mockEnderecoRepo.Setup(x => x.GetAddressById(It.IsAny<int>())).ReturnsAsync(() => null);
 
-            var enderecoById = await _mockEnderecoRepo.Object.GetEnderecoById(idAny);
+            var enderecoById = await _mockEnderecoRepo.Object.GetAddressById(idAny);
             //Assert
             Assert.Null(enderecoById);
         }
