@@ -21,7 +21,7 @@ namespace MercadoDigital.Infra.Data.Repositories
 
         public async Task<bool> Create(Categoria category)
         {
-            return await _generalRepository.Insert(category);
+            return await _generalRepository.Insert(new Categoria[] { category });
         }
         public async Task<bool> Delete(Categoria category)
         {

@@ -21,7 +21,7 @@ namespace MercadoDigital.Infra.Data.Repositories
 
         public async Task<bool> Create(Usuario user)
         {
-            return await _generalRepository.Insert(user);
+            return await _generalRepository.Insert(new Usuario[] { user });
         }
 
         public async Task<bool> Delete(Usuario user)

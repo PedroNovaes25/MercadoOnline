@@ -11,9 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MercadoDigital.Infra.Data",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MercadoDigital.Infra.Ioc", "MercadoDigital.Infra.Ioc\MercadoDigital.Infra.Ioc.csproj", "{EA8D3996-99D6-4759-B860-88CF24D6AFFF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MercadoOnline.RepositoryTest", "MercadoOnline.TesteUnidade\MercadoOnline.RepositoryTest.csproj", "{F274607A-5B7D-48EE-B6D6-F2EC73242BC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MercadoDigital.RepositoryTest", "MercadoOnline.TesteUnidade\MercadoDigital.RepositoryTest.csproj", "{F274607A-5B7D-48EE-B6D6-F2EC73242BC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{B7FC8A1A-2647-4F17-90B9-06E8533AEA42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MercadoDigital.API", "MercadoDigital.API\MercadoDigital.API.csproj", "{736F6FA5-F12F-475C-BCB1-EB2BB49176C0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{08D2F554-D7C6-470D-A76A-3F1996D23B8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib.Exceptions", "Lib.Exceptions\Lib.Exceptions.csproj", "{F07543B0-C721-48C2-85CC-340FA76D92D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,13 +45,20 @@ Global
 		{F274607A-5B7D-48EE-B6D6-F2EC73242BC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F274607A-5B7D-48EE-B6D6-F2EC73242BC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F274607A-5B7D-48EE-B6D6-F2EC73242BC9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7FC8A1A-2647-4F17-90B9-06E8533AEA42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7FC8A1A-2647-4F17-90B9-06E8533AEA42}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7FC8A1A-2647-4F17-90B9-06E8533AEA42}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7FC8A1A-2647-4F17-90B9-06E8533AEA42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{736F6FA5-F12F-475C-BCB1-EB2BB49176C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{736F6FA5-F12F-475C-BCB1-EB2BB49176C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{736F6FA5-F12F-475C-BCB1-EB2BB49176C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{736F6FA5-F12F-475C-BCB1-EB2BB49176C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F07543B0-C721-48C2-85CC-340FA76D92D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F07543B0-C721-48C2-85CC-340FA76D92D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F07543B0-C721-48C2-85CC-340FA76D92D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F07543B0-C721-48C2-85CC-340FA76D92D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F07543B0-C721-48C2-85CC-340FA76D92D2} = {08D2F554-D7C6-470D-A76A-3F1996D23B8D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {96ED31DF-26C1-46E1-8FFA-6CE511BA9186}

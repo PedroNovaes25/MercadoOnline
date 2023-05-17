@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Infra.Data.Repositories
 {
-    public class CategoryProductRepository : ICategoryProdudtRepository
+    public class CategoryProductRepository : ICategoryProductRepository
     {
         private readonly IGeneralRepository<MercadoDbContext> _generalRepository;
 
@@ -19,9 +19,9 @@ namespace MercadoDigital.Infra.Data.Repositories
             _generalRepository = generalRepository;
         }
 
-        public async Task<bool> Create(CategoriaProduto categoryProduct)
+        public async Task<bool> Create(CategoriaProduto[] categoriesProduct)
         {
-            return await _generalRepository.Insert(categoryProduct);
+            return await _generalRepository.Insert(categoriesProduct);
         }
     }
 }

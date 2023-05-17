@@ -19,9 +19,9 @@ namespace MercadoDigital.Infra.Data.Repositories
             _generalRepository = generalRepository;
         }
 
-        public async Task<bool> Create(PedidoItem orderItem)
+        public async Task<bool> Create(PedidoItem[] orderItems)
         {
-            return await _generalRepository.Insert(orderItem);
+            return await _generalRepository.Insert(orderItems);
         }
     }
 }

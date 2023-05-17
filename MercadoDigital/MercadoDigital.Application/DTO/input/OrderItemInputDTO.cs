@@ -9,9 +9,9 @@ namespace MercadoDigital.Application.DTO.Input
 {
     public class OrderItemInputDTO
     {
-        //[Required(ErrorMessage = "O campo {0} é obrigtório.")]
-        //[Range(1, Int32.MaxValue, ErrorMessage = "O {0} deve ser maior que 0")]
-        //public int IdPedido { get; set; }
+        [Required(ErrorMessage = "O campo {0} é obrigtório.")]
+        [Range(1, Int32.MaxValue, ErrorMessage = "O {0} deve ser maior que 0")]
+        public int IdPedido { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigtório.")]
         [Range(1, Int32.MaxValue, ErrorMessage = "O {0} deve ser maior que 0")]

@@ -21,7 +21,7 @@ namespace MercadoDigital.Infra.Data.Repositories
 
         public async Task<bool> Create(Endereco address)
         {
-            return await _generalRepository.Insert(address);
+            return await _generalRepository.Insert(new Endereco[] { address });
         }
         public async Task<bool> Delete(Endereco address)
         {

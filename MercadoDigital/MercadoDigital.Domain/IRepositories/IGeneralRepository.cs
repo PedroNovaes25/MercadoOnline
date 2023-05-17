@@ -8,7 +8,7 @@ namespace MercadoDigital.Domain.IRepositories
 {
     public interface IGeneralRepository<Context>
     {
-        Task<bool> Insert<Entity>(Entity entity) where Entity : class;
+        Task<bool> Insert<Entity>(Entity[] entities) where Entity : class;
         Task<bool> Remove<Entity>(Entity entity) where Entity : class;
         void RemoveRange<Entity>(Entity[] entities) where Entity : class;
         Task<bool> Update<Entity>(Entity model) where Entity : class;

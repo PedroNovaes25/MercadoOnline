@@ -20,7 +20,7 @@ namespace MercadoDigital.Infra.Data.Repositories
         }
         public async Task<bool> Create(Pedido order)
         {
-            return await _generalRepository.Insert(order);
+            return await _generalRepository.Insert(new Pedido[] { order });
         }
         public async Task<IEnumerable<Pedido>> GetAllOrdersByUserId(int userId)
         {

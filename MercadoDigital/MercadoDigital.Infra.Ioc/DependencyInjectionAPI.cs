@@ -29,13 +29,13 @@ namespace MercadoDigital.Infra.Ioc
 
         public static IServiceCollection AddDependencyServiceGroup(this IServiceCollection services) 
         {
+            services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<ICategoryProductService, CategoryProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IAddressService, AddressService>();
-            services.AddScoped<IStockService, StockService>();
             services.AddScoped<IOrderItemService, OrderItemService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IStockService, StockService>();
             services.AddScoped<IUserService, UserService>();
 
             return services;
@@ -43,15 +43,15 @@ namespace MercadoDigital.Infra.Ioc
 
         public static IServiceCollection AddDependencyRepositoryGroup(this IServiceCollection services)
         {
-            services.AddScoped<ICategoryProdudtRepository, CategoryProductRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IAddressRepository, EnderecoRepository>();
-            services.AddScoped<IStockRepository, StockRepository>();
+            services.AddScoped<ICategoryProductRepository, CategoryProductRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IGeneralRepository<MercadoDbContext>, GeneralRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IStockRepository, StockRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IGeneralRepository<MercadoDbContext>, GeneralRepository>();
 
             return services;
         }

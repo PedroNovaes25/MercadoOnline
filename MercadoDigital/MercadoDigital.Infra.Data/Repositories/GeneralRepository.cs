@@ -18,9 +18,9 @@ namespace MercadoDigital.Infra.Data.Repositories
             _context = options;
         }
 
-        public async Task<bool> Insert<Entity>(Entity entity) where Entity : class
+        public async Task<bool> Insert<Entity>(Entity[] entities) where Entity : class
         {
-            _context.Add(entity);
+            await _context.AddRangeAsync(entities);
             var saved = await _context.SaveChangesAsync();
 
             return saved > 0;

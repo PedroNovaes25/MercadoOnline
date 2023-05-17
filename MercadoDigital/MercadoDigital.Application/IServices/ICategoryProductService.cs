@@ -9,6 +9,6 @@ namespace MercadoDigital.Application.IServices
 {
     public interface ICategoryProductService
     {
-        Task<bool> Create(CategoryProductInputDTO categoryProductDTO);
+        Task<bool> Create(CategoryProductInputDTO[] categoriesProductsDTO);
     }
 }

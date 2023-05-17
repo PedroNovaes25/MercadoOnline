@@ -9,6 +9,6 @@ namespace MercadoDigital.Application.IServices
 {
     public interface IOrderItemService
     {
-        Task<bool> Create(OrderItemInputDTO oderItemDTO, int orderId);
+        Task<bool> Create(OrderItemInputDTO[] oderItemDTO);
     }
 }

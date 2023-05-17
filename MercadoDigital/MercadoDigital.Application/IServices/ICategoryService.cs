@@ -14,8 +14,8 @@ namespace MercadoDigital.Application.IServices
         Task<IEnumerable<CategoryOutputDTO>> GetAllCategories();
         Task<IEnumerable<CategoryOutputDTO>> GetCategoryByName(string name);
         Task<CategoryOutputDTO> GetCategoryById(int categoryId);
-        Task<bool> Create(CategorynputDTO categoryDTO);
-        Task<bool> Update(CategorynputDTO categoriaDTO, int categoryId);
+        Task<bool> Create(CategoryInputDTO categoryDTO);
+        Task<bool> Update(CategoryInputDTO categoriaDTO, int categoryId);
         Task<bool> Delete(int categoryId);
     }
 }

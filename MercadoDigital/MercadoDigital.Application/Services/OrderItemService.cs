@@ -11,23 +11,23 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Application.Services
 {
-    public class PedidoItemService : IPedidoItemService
+    public class OrderItemService : IOrderItemService
     {
-        private readonly IPedidoItemRepository _pedidoItemRepository;
+        private readonly IOrderItemRepository _OrderItemRepository;
         private readonly IMapper _mapper;
 
-        public PedidoItemService(IPedidoItemRepository pedidoItemRepository, IMapper _mapper)
+        public OrderItemService(IOrderItemRepository OrderItemRepository, IMapper _mapper)
         {
-            _pedidoItemRepository = pedidoItemRepository;
+            _OrderItemRepository = OrderItemRepository;
             this._mapper = _mapper;
         }
 
-        public async Task<bool> Create(PedidoItemInputDTO pedidoItemDTO)
+        public async Task<bool> Create(OrderItemInputDTO[] orderItemDTO)
         {
             try
             {
-                var pedido = _mapper.Map<PedidoItem>(pedidoItemDTO);
-                return await _pedidoItemRepository.Create(pedido);
+                var order = _mapper.Map<PedidoItem[]>(orderItemDTO);
+                return await _OrderItemRepository.Create(order);
             }
             catch (Exception e)
             {

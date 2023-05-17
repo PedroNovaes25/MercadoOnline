@@ -13,8 +13,8 @@ namespace MercadoDigital.Application.IServices
         Task<IEnumerable<StockProductOutputDTO>> GetAllStock();
         Task<StockProductOutputDTO> GetStockById(int stockId);
         Task<StockProductOutputDTO> GetStockByProductId(int productId);
-        Task<bool> Create(StockInputDTO stockDTO, int stockId);
-        Task<bool> Update(StockInputDTO stockDTO);
+        Task<bool> Create(StockInputDTO stockDTO);
+        Task<bool> Update(StockInputDTO stockDTO, int stockId);
         Task<bool> Delete(int stockId);
     }
 }

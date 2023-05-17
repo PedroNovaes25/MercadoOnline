@@ -20,7 +20,7 @@ namespace MercadoDigital.Infra.Data.Repositories
         }
         public async Task<bool> Create(Produto product)
         {
-            return await _generalRepository.Insert(product);
+            return await _generalRepository.Insert(new Produto[] { product });
         }
         public async Task<bool> Delete(Produto product)
         {

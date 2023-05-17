@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Domain.IRepositories
 {
-    public interface ICategoryProdudtRepository
+    public interface ICategoryProductRepository
     {
-        Task<bool> Create(CategoriaProduto categoryProduct);
+        Task<bool> Create(CategoriaProduto[] categoriesProducts);
     }
 }

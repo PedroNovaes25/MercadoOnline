@@ -9,6 +9,6 @@ namespace MercadoDigital.Domain.IRepositories
 {
     public interface IOrderItemRepository
     {
-        Task<bool> Create(PedidoItem orderItem);
+        Task<bool> Create(PedidoItem[] orderItem);
     }
 }
