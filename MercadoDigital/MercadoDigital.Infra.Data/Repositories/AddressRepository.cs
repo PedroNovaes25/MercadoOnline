@@ -39,5 +39,14 @@ namespace MercadoDigital.Infra.Data.Repositories
                 .Where(e => e.IdEndereco == addressId).FirstOrDefaultAsync()
             ))!;
         }
+
+        public async Task<IEnumerable<Endereco>> GetAddressByUserId(int idUser)
+        {
+            return (await _generalRepository.CommandExecuter
+            (
+                e => e.Enderecos.AsNoTracking()
+                .Where( e => e.IdUsuario == idUser).ToListAsync()
+            ));
+        }
     }
 }

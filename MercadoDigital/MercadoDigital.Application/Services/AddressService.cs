@@ -8,6 +8,7 @@ using MercadoDigital.Domain.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -50,6 +51,20 @@ namespace MercadoDigital.Application.Services
             catch (Exception) { throw; }
         }
 
+        public async Task<bool> Update(AddressInputDTO addressDTO, int idAddress)
+        {
+            try
+            {
+                var address = await _addressRepository.GetAddressById(idAddress);
+                if (address == null)
+                    throw new DataNotFoundException($"The address with the ID '{idAddress}' was not found.");
+
+                _mapper.Map(addressDTO, address);
+                return await _addressRepository.Update(address);
+            }
+            catch (Exception) { throw; }
+        }
+
         public async Task<AddressOutputDTO> GetAddressById(int idAddress)
         {
             try
@@ -63,16 +78,15 @@ namespace MercadoDigital.Application.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<bool> Update(AddressInputDTO addressDTO, int idAddress)
+        public async Task<IEnumerable<AddressOutputDTO>> GetAddressByUserId(int userId)
         {
             try
             {
-                var address = await _addressRepository.GetAddressById(idAddress);
-                if (address == null)
-                    throw new DataNotFoundException($"The address with the ID '{idAddress}' was not found.");
+                var addresses = await _addressRepository.GetAddressByUserId(userId);
+                if (addresses == null)
+                    throw new DataNotFoundException($"The address with the userId '{userId}' was not found.");
 
-                _mapper.Map(addressDTO, address);
-                return await _addressRepository.Update(address);
+                return _mapper.Map<IEnumerable<AddressOutputDTO>>(addresses);
             }
             catch (Exception) { throw; }
         }

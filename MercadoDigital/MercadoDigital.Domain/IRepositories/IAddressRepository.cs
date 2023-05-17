@@ -13,6 +13,6 @@ namespace MercadoDigital.Domain.IRepositories
         Task<bool> Create(Endereco address);
         Task<bool> Update(Endereco address);
         Task<bool> Delete(Endereco address);
-
+        Task<IEnumerable<Endereco>> GetAddressByUserId(int userId);
     }
 }

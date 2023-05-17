@@ -88,5 +88,24 @@ namespace MercadoDigital.API.Controllers.v1
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error getting record.");
             }
         }
+
+        [HttpGet("by-user/{id}")]
+        public async Task<IActionResult> GetAddressByUserId(int id)
+        {
+            try
+            {
+                var address = await _addressService.GetAddressByUserId(id);
+                return Ok(address);
+            }
+            catch (DataNotFoundException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound,
+                    e.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error getting record.");
+            }
+        }
     }
 }

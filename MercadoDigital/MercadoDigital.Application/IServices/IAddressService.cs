@@ -10,9 +10,10 @@ namespace MercadoDigital.Application.IServices
 {
     public interface IAddressService
     {
-        Task<AddressOutputDTO> GetAddressById(int idAddress);
+        Task<AddressOutputDTO> GetAddressById(int addressId);
         Task<bool> Create(AddressInputDTO addressDTO);
         Task<bool> Update(AddressInputDTO addressDTO, int idAddress);
         Task<bool> Delete(int idAddress);
+        Task<IEnumerable<AddressOutputDTO>> GetAddressByUserId(int userId);
     }
 }
