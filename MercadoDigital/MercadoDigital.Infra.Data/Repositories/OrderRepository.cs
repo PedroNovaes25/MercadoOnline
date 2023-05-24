@@ -31,7 +31,7 @@ namespace MercadoDigital.Infra.Data.Repositories
                 .AsNoTracking()
                 .Include(p => p.PedidoItem)
                 .ThenInclude(pi => pi.Produto)
-                .Where(p => p.IdUsuario == userId)
+                .Where(p => p.UserId == userId)
                 .OrderByDescending(p => p.DataCompra)
                 .ToListAsync()
             );

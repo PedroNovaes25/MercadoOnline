@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MercadoDigital.Infra.Data.Migrations
 {
     [DbContext(typeof(MercadoDbContext))]
-    [Migration("20230424135347_ajuste")]
-    partial class ajuste
+    [Migration("20230522201106_identityV2")]
+    partial class identityV2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,9 +80,6 @@ namespace MercadoDigital.Infra.Data.Migrations
                     b.Property<string>("Complemento")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdUsuario")
-                        .HasColumnType("int");
-
                     b.Property<string>("Logradouro")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -95,9 +92,12 @@ namespace MercadoDigital.Infra.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("IdEndereco");
 
-                    b.HasIndex("IdUsuario")
+                    b.HasIndex("UserId")
                         .IsUnique();
 
                     b.ToTable("Enderecos");
@@ -125,6 +125,93 @@ namespace MercadoDigital.Infra.Data.Migrations
                     b.ToTable("Estoques");
                 });
 
+            modelBuilder.Entity("MercadoDigital.Domain.Entities.Identity.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RG")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
             modelBuilder.Entity("MercadoDigital.Domain.Entities.Pedido", b =>
                 {
                     b.Property<int>("IdPedido")
@@ -136,7 +223,7 @@ namespace MercadoDigital.Infra.Data.Migrations
                     b.Property<DateTime>("DataCompra")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdUsuario")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<double>("ValorPedido")
@@ -144,7 +231,7 @@ namespace MercadoDigital.Infra.Data.Migrations
 
                     b.HasKey("IdPedido");
 
-                    b.HasIndex("IdUsuario");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Pedidos");
                 });
@@ -197,51 +284,68 @@ namespace MercadoDigital.Infra.Data.Migrations
                     b.ToTable("Produtos");
                 });
 
-            modelBuilder.Entity("MercadoDigital.Domain.Entities.Usuario", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.Property<int>("IdUsuario")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUsuario"), 60L, 5);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Celular")
-                        .IsRequired()
+                    b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Cpf")
-                        .IsRequired()
+                    b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Idade")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Nascimento")
-                        .HasColumnType("datetime2");
+                    b.HasKey("Id");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Rg")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.Property<string>("Sexo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdUsuario");
-
-                    b.ToTable("Usuarios");
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("MercadoDigital.Domain.Entities.CategoriaProduto", b =>
@@ -265,13 +369,13 @@ namespace MercadoDigital.Infra.Data.Migrations
 
             modelBuilder.Entity("MercadoDigital.Domain.Entities.Endereco", b =>
                 {
-                    b.HasOne("MercadoDigital.Domain.Entities.Usuario", "Usuario")
-                        .WithOne("Endereco")
-                        .HasForeignKey("MercadoDigital.Domain.Entities.Endereco", "IdUsuario")
+                    b.HasOne("MercadoDigital.Domain.Entities.Identity.User", "User")
+                        .WithOne("Addresses")
+                        .HasForeignKey("MercadoDigital.Domain.Entities.Endereco", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Usuario");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MercadoDigital.Domain.Entities.Estoque", b =>
@@ -287,13 +391,13 @@ namespace MercadoDigital.Infra.Data.Migrations
 
             modelBuilder.Entity("MercadoDigital.Domain.Entities.Pedido", b =>
                 {
-                    b.HasOne("MercadoDigital.Domain.Entities.Usuario", "Usuario")
-                        .WithMany("Pedidos")
-                        .HasForeignKey("IdUsuario")
+                    b.HasOne("MercadoDigital.Domain.Entities.Identity.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Usuario");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MercadoDigital.Domain.Entities.PedidoItem", b =>
@@ -315,9 +419,44 @@ namespace MercadoDigital.Infra.Data.Migrations
                     b.Navigation("Produto");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.HasOne("MercadoDigital.Domain.Entities.Identity.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.HasOne("MercadoDigital.Domain.Entities.Identity.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.HasOne("MercadoDigital.Domain.Entities.Identity.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("MercadoDigital.Domain.Entities.Categoria", b =>
                 {
                     b.Navigation("CategoriaProduto");
+                });
+
+            modelBuilder.Entity("MercadoDigital.Domain.Entities.Identity.User", b =>
+                {
+                    b.Navigation("Addresses")
+                        .IsRequired();
+
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("MercadoDigital.Domain.Entities.Pedido", b =>
@@ -333,14 +472,6 @@ namespace MercadoDigital.Infra.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("PedidoItem");
-                });
-
-            modelBuilder.Entity("MercadoDigital.Domain.Entities.Usuario", b =>
-                {
-                    b.Navigation("Endereco")
-                        .IsRequired();
-
-                    b.Navigation("Pedidos");
                 });
 #pragma warning restore 612, 618
         }

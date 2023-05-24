@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Application.DTO.Input
 {
-    public class OrderItemInputDTO
+    public class OrderItemsInputDTO
     {
         [Required(ErrorMessage = "O campo {0} é obrigtório.")]
         [Range(1, Int32.MaxValue, ErrorMessage = "O {0} deve ser maior que 0")]

@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Application.Services
 {
-    public class OrderItemService : IOrderItemService
+    public class OrderItemsService : IOrderItemsService
     {
         private readonly IOrderItemRepository _OrderItemRepository;
         private readonly IMapper _mapper;
 
-        public OrderItemService(IOrderItemRepository OrderItemRepository, IMapper _mapper)
+        public OrderItemsService(IOrderItemRepository OrderItemRepository, IMapper _mapper)
         {
             _OrderItemRepository = OrderItemRepository;
             this._mapper = _mapper;
         }
 
-        public async Task<bool> Create(OrderItemInputDTO[] orderItemDTO)
+        public async Task<bool> Create(OrderItemsInputDTO[] orderItemDTO)
         {
             try
             {

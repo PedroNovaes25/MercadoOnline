@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using MercadoDigital.Application.Account;
+using MercadoDigital.Application.DTO.input.Login;
 using MercadoDigital.Application.DTO.Input;
 using MercadoDigital.Application.DTO.Output;
 using MercadoDigital.Domain.Entities;
+using MercadoDigital.Domain.Entities.Identity;
 using MercadoDigital.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -20,19 +23,18 @@ namespace MercadoDigital.Application.Mappings
             CreateMap<AddressInputDTO, Endereco>();
             CreateMap<StockInputDTO, Estoque>();
             CreateMap<OrderInputDTO, Pedido>();
-            CreateMap<OrderItemInputDTO, PedidoItem>();
+            CreateMap<OrderItemsInputDTO, PedidoItem>();
             CreateMap<ProductInputDTO, Produto>();
-            CreateMap<UserInputDTO, Usuario>();
+            CreateMap<UserInputDTO, User>();
             CreateMap<CategoryProductInputDTO, CategoriaProduto>();
 
             //Output Mapper
             CreateMap<Categoria, CategoryOutputDTO>();
             CreateMap<Endereco, AddressOutputDTO>();
             CreateMap<Produto, ProductOutputDTO>();
-            CreateMap<Usuario, UserOutputDTO>();
+            CreateMap<User, UserOutputDTO>().ReverseMap();
 
             CreateMap<EstoqueEProduto, StockProductOutputDTO>();
-            
             
             //Configurar, retorno personalizado
             CreateMap<Pedido, OrderOutputDTO>()
@@ -47,7 +49,7 @@ namespace MercadoDigital.Application.Mappings
             //    .ForMember(dest => dest.Preco, ep => ep.MapFrom(orig => orig.Produto.Preco));
 
             //mapear tipo complexo para tipo primitivo
-            CreateMap<PedidoItem, OrderItemOutputDTO>()
+            CreateMap<PedidoItem, OrderItemsOutputDTO>()
                 .ForMember(dest => dest.IdProduto, pi => pi.MapFrom(orig => orig.Produto.IdProduto))
                 .ForMember(dest => dest.Nome, pi => pi.MapFrom(orig => orig.Produto.Nome))
                 .ForMember(dest => dest.Vencimento, pi => pi.MapFrom(orig => orig.Produto.Vencimento))

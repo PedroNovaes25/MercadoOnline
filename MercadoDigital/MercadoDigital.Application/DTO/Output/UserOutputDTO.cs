@@ -8,14 +8,14 @@ namespace MercadoDigital.Application.DTO.Output
 {
     public class UserOutputDTO
     {
-        public int IdUsuario { get; set; }
-        public string Nome { get; set; }
-        public string Rg { get; set; }
-        public string Cpf { get; set; }
-        public DateTime Nascimento { get; set; }
-        public int Idade { get; set; }
-        public string Sexo { get; set; }
-        public string Celular { get; set; }
+        public int Id { get; set; }
+        public string UserName { get; set; }
+        public string FullName { get; set; }
+        public string RG { get; set; }
+        public string CPF { get; set; }
+        public DateTime BirthDate { get; set; }
+        public string Gender { get; set; }
+        public string PhoneNumber { get; set; }
         public string Email { get; set; }
     }
 }

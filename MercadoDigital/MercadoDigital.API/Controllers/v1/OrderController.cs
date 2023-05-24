@@ -3,6 +3,7 @@ using MercadoDigital.Application.DTO.Input;
 using MercadoDigital.Application.DTO.Output;
 using MercadoDigital.Application.IServices;
 using MercadoDigital.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,7 @@ namespace MercadoDigital.API.Controllers.v1
 
         }
 
-
+        [Authorize]
         [HttpPost("")]
         public async Task<IActionResult> Create(OrderInputDTO OrderDTO)
         {
@@ -39,6 +40,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
+        [Authorize]
         [HttpGet("{orderId}")]
         public async Task<IActionResult> GetOrdersById(int orderId)
         {
@@ -58,6 +60,7 @@ namespace MercadoDigital.API.Controllers.v1
 
         }
 
+        [Authorize]
         [HttpGet("by-user/{id}")]
         public async Task<IActionResult> GetAllOrdersByUserId(int id)
         {

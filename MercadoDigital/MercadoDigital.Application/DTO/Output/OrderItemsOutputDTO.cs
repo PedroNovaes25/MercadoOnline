@@ -2,7 +2,7 @@
 
 namespace MercadoDigital.Application.DTO.Output
 {
-    public class OrderItemOutputDTO
+    public class OrderItemsOutputDTO
     {
         //PedidoItem
         public int Quantidade { get; set; }

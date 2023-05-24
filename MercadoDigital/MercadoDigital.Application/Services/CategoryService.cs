@@ -5,6 +5,7 @@ using MercadoDigital.Application.DTO.Output;
 using MercadoDigital.Application.IServices;
 using MercadoDigital.Domain.Entities;
 using MercadoDigital.Domain.IRepositories;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace MercadoDigital.Application.Services
             _categoryRepository = categoryRepository;
             _mapper = mapper;
         }
+
         public async Task<bool> Create(CategoryInputDTO categoryDTO)
         {
             try

@@ -16,6 +16,6 @@ namespace MercadoDigital.Application.DTO.Output
         public int IdUsuario { get; set; }
 
         //PedidoItem
-        public List<OrderItemOutputDTO> PedidoItemDTO { get; set; }
+        public List<OrderItemsOutputDTO> PedidoItemDTO { get; set; }
     }
 }

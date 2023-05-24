@@ -1,6 +1,7 @@
 ﻿using MercadoDigital.Application.DTO.Input;
 using MercadoDigital.Application.IServices;
 using MercadoDigital.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace MercadoDigital.API.Controllers.v1
             _categoryProductService = categoryProductService;
         }
 
+        [Authorize]
         [HttpPost("")]
         public async Task<IActionResult> Create(CategoryProductInputDTO[] categoriesProductsDTO) 
         {

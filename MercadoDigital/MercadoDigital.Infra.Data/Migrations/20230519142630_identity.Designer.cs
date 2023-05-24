@@ -4,6 +4,7 @@ using MercadoDigital.Infra.Data.Connection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MercadoDigital.Infra.Data.Migrations
 {
     [DbContext(typeof(MercadoDbContext))]
-    partial class MercadoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230519142630_identity")]
+    partial class identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,6 +125,36 @@ namespace MercadoDigital.Infra.Data.Migrations
                     b.ToTable("Estoques");
                 });
 
+            modelBuilder.Entity("MercadoDigital.Domain.Entities.Identity.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
             modelBuilder.Entity("MercadoDigital.Domain.Entities.Identity.User", b =>
                 {
                     b.Property<int>("Id")
@@ -150,10 +183,6 @@ namespace MercadoDigital.Infra.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
@@ -207,6 +236,21 @@ namespace MercadoDigital.Infra.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("MercadoDigital.Domain.Entities.Identity.UserRole", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("MercadoDigital.Domain.Entities.Pedido", b =>
@@ -279,6 +323,30 @@ namespace MercadoDigital.Infra.Data.Migrations
                     b.HasKey("IdProduto");
 
                     b.ToTable("Produtos");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
@@ -386,6 +454,25 @@ namespace MercadoDigital.Infra.Data.Migrations
                     b.Navigation("Produto");
                 });
 
+            modelBuilder.Entity("MercadoDigital.Domain.Entities.Identity.UserRole", b =>
+                {
+                    b.HasOne("MercadoDigital.Domain.Entities.Identity.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MercadoDigital.Domain.Entities.Identity.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MercadoDigital.Domain.Entities.Pedido", b =>
                 {
                     b.HasOne("MercadoDigital.Domain.Entities.Identity.User", "User")
@@ -414,6 +501,15 @@ namespace MercadoDigital.Infra.Data.Migrations
                     b.Navigation("Pedido");
 
                     b.Navigation("Produto");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.HasOne("MercadoDigital.Domain.Entities.Identity.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
@@ -448,12 +544,19 @@ namespace MercadoDigital.Infra.Data.Migrations
                     b.Navigation("CategoriaProduto");
                 });
 
+            modelBuilder.Entity("MercadoDigital.Domain.Entities.Identity.Role", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
             modelBuilder.Entity("MercadoDigital.Domain.Entities.Identity.User", b =>
                 {
                     b.Navigation("Addresses")
                         .IsRequired();
 
                     b.Navigation("Orders");
+
+                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("MercadoDigital.Domain.Entities.Pedido", b =>

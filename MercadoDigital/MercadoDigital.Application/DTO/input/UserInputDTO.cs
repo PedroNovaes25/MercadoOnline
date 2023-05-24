@@ -5,36 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MercadoDigital.Application.DTO.Input
+namespace MercadoDigital.Application.DTO.input.Login
 {
     public class UserInputDTO
     {
-        [Required(ErrorMessage = "O campo {0} é obrigtório.")]
-        public string Nome { get; set; }
-        
-        [Required(ErrorMessage = "O campo {0} é obrigtório.")]
-        public string Rg { get; set; }
-
-        [Required(ErrorMessage = "O campo {0} é obrigtório.")]
-        public string Cpf { get; set; }
-
-        [Required(ErrorMessage = "O campo {0} é obrigtório.")]
-        public DateTime Nascimento { get; set; }
-        
-        [Required(ErrorMessage = "O campo {0} é obrigtório.")]
-        [Range(18, Int32.MaxValue, ErrorMessage = "A {0} miníma é de 18 anos.")]
-        public int Idade { get; set; }
-        
-        [Required(ErrorMessage = "O campo {0} é obrigtório.")]
-        public string Sexo { get; set; }
-        
-        [Required(ErrorMessage = "O campo {0} é obrigtório.")]
-        public string Celular { get; set; }
-        
-        [Required(ErrorMessage = "O campo {0} é obrigtório.")]
-        public string Email { get; set; }
-        
-        [Required(ErrorMessage = "O campo {0} é obrigtório.")]
+        [Required]
+        public string UserName { get; set; }
+        [Required]
+        public string FullName { get; set; }
+        [Required]
         public string Password { get; set; }
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public string RG { get; set; }
+        [Required]
+        public string CPF { get; set; }
+        [Required]
+        public string Gender { get; set; }
+        [Required]
+        public DateTime BirthDate { get; set; }
     }
+
 }
