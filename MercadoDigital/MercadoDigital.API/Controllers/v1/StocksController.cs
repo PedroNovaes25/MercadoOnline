@@ -21,7 +21,7 @@ namespace MercadoDigital.API.Controllers.v1
             _stockService = stockService;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost("")]
         public async Task<IActionResult> Create(StockInputDTO stockDTO)
         {
@@ -40,7 +40,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPut("{stockId}")]
         public async Task<IActionResult> Update(StockInputDTO stockDTO, int stockId)
         {
@@ -63,7 +63,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin, Manager")]
         [HttpDelete("{stockId}")]
         public async Task<IActionResult> Delete(int stockId)
         {

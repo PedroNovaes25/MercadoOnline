@@ -2,10 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using MercadoDigital.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace MercadoDigital.Infra.Data.Connection
 {
-    public class MercadoDbContext : IdentityUserContext<User, int>
+    public class MercadoDbContext : IdentityDbContext<User, Role, int,
+                                                        IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>,
+                                                        IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public MercadoDbContext()
         {
@@ -35,21 +38,21 @@ namespace MercadoDigital.Infra.Data.Connection
             base.OnModelCreating(modelBuilder);
 
 
-           // modelBuilder.Entity<UserRole>(userRole =>
-           // {
-           //     userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
+            modelBuilder.Entity<UserRole>(userRole =>
+            {
+                userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
 
-           //     userRole.HasOne(ur => ur.Role)
-           //         .WithMany(r => r.UserRoles)
-           //         .HasForeignKey(ur => ur.RoleId)
-           //         .IsRequired();
+                userRole.HasOne(ur => ur.Role)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
 
-           //     userRole.HasOne(ur => ur.User)
-           //       .WithMany(r => r.UserRoles)
-           //       .HasForeignKey(ur => ur.UserId)
-           //       .IsRequired();
-           // }
-           //);
+                userRole.HasOne(ur => ur.User)
+                  .WithMany(r => r.UserRoles)
+                  .HasForeignKey(ur => ur.UserId)
+                  .IsRequired();
+            }
+           );
 
             //Config PrimaryKey
             modelBuilder.Entity<Endereco>().HasKey(c => c.IdEndereco);

@@ -18,7 +18,7 @@ namespace MercadoDigital.API.Controllers.v1
             _categoryProductService = categoryProductService;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost("")]
         public async Task<IActionResult> Create(CategoryProductInputDTO[] categoriesProductsDTO) 
         {

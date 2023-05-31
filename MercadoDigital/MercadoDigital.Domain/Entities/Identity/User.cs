@@ -15,7 +15,7 @@ namespace MercadoDigital.Domain.Entities.Identity
         public string CPF { get; set; }
         public DateTime BirthDate { get; set; }
         public string Gender { get; set; }
-        //public IEnumerable<UserRole> UserRoles { get; set; }
+        public IEnumerable<UserRole> UserRoles { get; set; }
         public Endereco Addresses { get; set; }
         public List<Pedido> Orders { get; set; }
     }

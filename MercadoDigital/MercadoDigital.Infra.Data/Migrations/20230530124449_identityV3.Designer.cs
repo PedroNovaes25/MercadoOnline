@@ -4,6 +4,7 @@ using MercadoDigital.Infra.Data.Connection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MercadoDigital.Infra.Data.Migrations
 {
     [DbContext(typeof(MercadoDbContext))]
-    partial class MercadoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230530124449_identityV3")]
+    partial class identityV3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

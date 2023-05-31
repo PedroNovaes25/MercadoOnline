@@ -19,7 +19,7 @@ namespace MercadoDigital.API.Controllers.v1
             _categoryService = categoryService;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost("")]
         public async Task<IActionResult> Create(CategoryInputDTO categoryInputDTO)
         {
@@ -38,7 +38,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin, Manager")]
         [HttpDelete("{categoryId}")]
         public async Task<IActionResult> Delete(int categoryId)
         {
@@ -62,7 +62,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPut("{categoryId}")]
         public async Task<IActionResult> Update(CategoryInputDTO categoryInputDTO, int categoryId)
         {

@@ -38,7 +38,7 @@ namespace MercadoDigital.API
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CleanArchMVC.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MercadoOnline.API", Version = "v1" });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {

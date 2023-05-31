@@ -21,7 +21,7 @@ namespace MercadoDigital.API.Controllers.v1
             _productService = productService;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost("")]
         public async Task<IActionResult> Create(ProductInputDTO productDTO)
         {
@@ -37,7 +37,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPut("{productId}")]
         public async Task<IActionResult> Update(ProductInputDTO productDTO, int productId)
         {
@@ -61,7 +61,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin, Manager")]
         [HttpDelete("{productId}")]
         public async Task<IActionResult> Delete(int productId)
         {

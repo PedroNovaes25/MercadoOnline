@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Domain.Entities.Identity
 {
-    [NotMapped]
     public class Role : IdentityRole<int>
     {
         public List<UserRole> UserRoles { get; set; }

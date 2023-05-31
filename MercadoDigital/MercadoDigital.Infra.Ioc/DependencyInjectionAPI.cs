@@ -1,10 +1,11 @@
-﻿using MercadoDigital.Application.IServices;
+﻿using MercadoDigital.Application.Account;
+using MercadoDigital.Application.IServices;
+using MercadoDigital.Application.IServices.Account;
 using MercadoDigital.Application.Services;
 using MercadoDigital.Application.Services.Account;
 using MercadoDigital.Domain.Entities.Identity;
 using MercadoDigital.Domain.IRepositories;
 using MercadoDigital.Infra.Data.Connection;
-using MercadoDigital.Infra.Data.Identity;
 using MercadoDigital.Infra.Data.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -41,15 +42,18 @@ namespace MercadoDigital.Infra.Ioc
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
-            })
+            }).AddRoles<Role>()
+            .AddRoleManager<RoleManager<Role>>()
+            .AddSignInManager<SignInManager<User>>()
+            .AddRoleValidator<RoleValidator<Role>>()
             .AddEntityFrameworkStores<MercadoDbContext>()
-            .AddDefaultTokenProviders(); 
+            .AddDefaultTokenProviders();
 
             return services;
         }
         public static IServiceCollection AddDependencyServiceGroup(this IServiceCollection services)
         {
-            services.AddScoped<IAuthenticate, JwtService>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<ICategoryProductService, CategoryProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
@@ -58,6 +62,7 @@ namespace MercadoDigital.Infra.Ioc
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IStockService, StockService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
             // Depois ver como implementar: (ITokenCreationService no JwtService) services.AddScoped<ITokenCreationService, JwtService>();
 
             return services;

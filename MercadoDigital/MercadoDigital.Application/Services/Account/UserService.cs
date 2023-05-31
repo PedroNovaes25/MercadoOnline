@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
+using Lib.Exceptions;
 using MercadoDigital.Application.Account;
 using MercadoDigital.Application.DTO.input.Login;
 using MercadoDigital.Application.DTO.Input;
 using MercadoDigital.Application.DTO.Output;
-using MercadoDigital.Application.IServices;
+using MercadoDigital.Application.IServices.Account;
 using MercadoDigital.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -16,19 +17,20 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Application.Services.Account
 {
-    public class UserService : IUserService
+    public class UserService : IUserService 
     {
         private readonly UserManager<User> _userManager;
-        private readonly IAuthenticate _jwtService;
+        private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
 
-        public UserService(UserManager<User> userManager, IAuthenticate authenticate, IMapper mapper)
+        public UserService(UserManager<User> userManager, ITokenService tokenService, IMapper mapper)
         {
             _userManager = userManager;
-            _jwtService = authenticate;
+            _tokenService = tokenService;
             _mapper = mapper;
         }
 
+        #region About Register
         public async Task<bool> CheckPasswordAsync(string username, string password)
         {
             try
@@ -59,13 +61,14 @@ namespace MercadoDigital.Application.Services.Account
             }
         }
 
-        public AuthenticationResponseDTO CreateToken(UserOutputDTO userDTO)
+        public async Task<AuthenticationResponseDTO> CreateToken(UserOutputDTO userDTO)
         {
             try
             {
                 //Talvez tenha que chamar o user diretamente
                 var user = _mapper.Map<User>(userDTO);
-                var result = _jwtService.CreateToken(user);
+                var userRoles = (await _userManager.GetRolesAsync(user)).ToList();
+                var result = _tokenService.CreateToken(userDTO, userRoles);
 
                 Type type = result.GetType();
                 var properties = type.GetProperties();
@@ -100,5 +103,39 @@ namespace MercadoDigital.Application.Services.Account
                 throw;
             }
         }
+
+
+        #endregion
+
+        #region About authorization
+        
+        public async Task<bool> AssignRolesToUser(string email, string roleName)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                throw new DataNotFoundException("Unregistered user email.");
+
+            var result = await _userManager.AddToRoleAsync(user, roleName);
+            return result.Succeeded;
+        }
+
+        public async Task<IEnumerable<string>> GetUserRoles(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                throw new DataNotFoundException("Unregistered user email.");
+            return (await _userManager.GetRolesAsync(user)).ToList();
+        }
+        
+        public async Task<bool> RemoveUserFromRole(string email, string roleName)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                throw new DataNotFoundException("Unregistered user email.");
+
+            return (await _userManager.RemoveFromRoleAsync(user, roleName)).Succeeded;
+        }
+
+        #endregion
     }
 }

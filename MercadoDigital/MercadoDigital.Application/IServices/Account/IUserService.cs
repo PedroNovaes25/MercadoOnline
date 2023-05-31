@@ -9,13 +9,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MercadoDigital.Application.IServices
+namespace MercadoDigital.Application.IServices.Account
 {
     public interface IUserService
     {
         Task<IdentityResult> Create(UserInputDTO userDTO);
         Task<UserOutputDTO> GetUserBy(string username);
         Task<bool> CheckPasswordAsync(string username, string password);
-        AuthenticationResponseDTO CreateToken(UserOutputDTO userDTO);
+        Task<AuthenticationResponseDTO> CreateToken(UserOutputDTO userDTO);
+
+        Task<bool> AssignRolesToUser(string email, string roleName);
+        Task<IEnumerable<string>> GetUserRoles(string email);
+        Task<bool> RemoveUserFromRole(string email, string roleName);
     }
 }
