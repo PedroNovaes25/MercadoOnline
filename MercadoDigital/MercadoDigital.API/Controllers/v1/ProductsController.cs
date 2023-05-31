@@ -4,6 +4,7 @@ using MercadoDigital.Application.DTO.Output;
 using MercadoDigital.Application.IServices;
 using MercadoDigital.Application.Services;
 using MercadoDigital.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace MercadoDigital.API.Controllers.v1
             _productService = productService;
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost("")]
         public async Task<IActionResult> Create(ProductInputDTO productDTO)
         {
@@ -34,7 +36,8 @@ namespace MercadoDigital.API.Controllers.v1
                     "Error creating records.");
             }
         }
-        
+
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPut("{productId}")]
         public async Task<IActionResult> Update(ProductInputDTO productDTO, int productId)
         {
@@ -57,7 +60,8 @@ namespace MercadoDigital.API.Controllers.v1
                     "Error updating record");
             }
         }
-        
+
+        [Authorize(Roles = "Admin, Manager")]
         [HttpDelete("{productId}")]
         public async Task<IActionResult> Delete(int productId)
         {
@@ -80,7 +84,8 @@ namespace MercadoDigital.API.Controllers.v1
                     "Error Deleting record");
             }
         }
-        
+
+        [Authorize]
         [HttpGet("")]
         public async Task<IActionResult> GetAllProducts()
         {
@@ -96,6 +101,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
+        [Authorize]
         [HttpGet("by-category/{id}")]
         public async Task<IActionResult> GetAllProductsFromCategoryId(int id)
         {
@@ -116,6 +122,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
+        [Authorize]
         [HttpGet("{productId}")]
         public async Task<IActionResult> GetProductById(int productId)
         {
@@ -136,6 +143,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
+        [Authorize]
         [HttpGet("{name}")]
         public async Task<IActionResult> GetProductByName(string name)
         {

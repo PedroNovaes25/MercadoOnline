@@ -1,6 +1,7 @@
 ﻿using MercadoDigital.Application.DTO.Input;
 using MercadoDigital.Application.IServices;
 using MercadoDigital.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,17 +9,18 @@ namespace MercadoDigital.API.Controllers.v1
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class OrderItemController : ControllerBase
+    public class OrderItemsController : ControllerBase
     {
-        private readonly IOrderItemService _orderItemService;
+        private readonly IOrderItemsService _orderItemService;
 
-        public OrderItemController(IOrderItemService ordertemService)
+        public OrderItemsController(IOrderItemsService ordertemService)
         {
             _orderItemService = ordertemService;
         }
 
+        [Authorize]
         [HttpPost("")]
-        public async Task<IActionResult> CreateItemOrder(OrderItemInputDTO[] ordersItemDTO)
+        public async Task<IActionResult> CreateItemOrder(OrderItemsInputDTO[] ordersItemDTO)
         {
             try
             {

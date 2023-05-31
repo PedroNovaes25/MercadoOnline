@@ -4,6 +4,7 @@ using MercadoDigital.Application.DTO.Output;
 using MercadoDigital.Application.IServices;
 using MercadoDigital.Application.Services;
 using MercadoDigital.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace MercadoDigital.API.Controllers.v1
             _stockService = stockService;
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost("")]
         public async Task<IActionResult> Create(StockInputDTO stockDTO)
         {
@@ -38,6 +40,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPut("{stockId}")]
         public async Task<IActionResult> Update(StockInputDTO stockDTO, int stockId)
         {
@@ -60,6 +63,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpDelete("{stockId}")]
         public async Task<IActionResult> Delete(int stockId)
         {
@@ -83,6 +87,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
+        [Authorize]
         [HttpGet("")]
         public async Task<IActionResult> GetAllStock()
         {
@@ -97,7 +102,8 @@ namespace MercadoDigital.API.Controllers.v1
                     "Error getting all records.");
             }
         }
-        
+
+        [Authorize]
         [HttpGet("{stockId}")]
         public async Task<IActionResult> GetStockById(int stockId)
         {
@@ -117,7 +123,8 @@ namespace MercadoDigital.API.Controllers.v1
                     "Error getting record by id");
             }
         }
-        
+
+        [Authorize]
         [HttpGet("by-product/{id}")]
         public async Task<IActionResult> GetStockByProductId(int id)
         {

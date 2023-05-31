@@ -1,4 +1,4 @@
-﻿using MercadoDigital.Domain.Entities;
+﻿using MercadoDigital.Domain.Entities.Identity;
 using MercadoDigital.Domain.IRepositories;
 using MercadoDigital.Infra.Data.Connection;
 using Microsoft.EntityFrameworkCore;
@@ -19,27 +19,27 @@ namespace MercadoDigital.Infra.Data.Repositories
             _generalRepository = generalRepository;
         }
 
-        public async Task<bool> Create(Usuario user)
+        public async Task<bool> Create(User user)
         {
-            return await _generalRepository.Insert(new Usuario[] { user });
+            return await _generalRepository.Insert(new User[] { user });
         }
 
-        public async Task<bool> Delete(Usuario user)
+        public async Task<bool> Delete(User user)
         {
             return await _generalRepository.Remove(user);
         }
 
-        public async Task<bool> Update(Usuario user)
+        public async Task<bool> Update(User user)
         {
             return await _generalRepository.Update(user);
         }
-        public async Task<Usuario> GetById(int userId)
+        public async Task<User> GetById(int userId)
         {
             return (await _generalRepository.CommandExecuter
             (
-                u => u.Usuarios
+                u => u.Users
                 .AsNoTracking()
-                .Where(u => u.IdUsuario == userId)
+                .Where(u => u.Id == userId)
                 .FirstOrDefaultAsync()
             ))!;
         }

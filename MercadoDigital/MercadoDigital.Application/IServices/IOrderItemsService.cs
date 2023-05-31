@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace MercadoDigital.Application.IServices
 {
-    public interface IOrderItemService
+    public interface IOrderItemsService
     {
-        Task<bool> Create(OrderItemInputDTO[] oderItemDTO);
+        Task<bool> Create(OrderItemsInputDTO[] oderItemDTO);
     }
 }

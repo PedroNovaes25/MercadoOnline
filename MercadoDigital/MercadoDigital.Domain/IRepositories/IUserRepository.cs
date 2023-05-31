@@ -1,4 +1,4 @@
-﻿using MercadoDigital.Domain.Entities;
+﻿using MercadoDigital.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +9,9 @@ namespace MercadoDigital.Domain.IRepositories
 {
     public interface IUserRepository
     {
-        Task<bool> Create(Usuario user);
-        Task<Usuario> GetById(int userId);
-        Task<bool> Update(Usuario user);
-        Task<bool> Delete(Usuario user);
+        Task<bool> Create(User user);
+        Task<User> GetById(int userId);
+        Task<bool> Update(User user);
+        Task<bool> Delete(User user);
     }
 }

@@ -3,6 +3,7 @@ using MercadoDigital.Application.DTO.Input;
 using MercadoDigital.Application.DTO.Output;
 using MercadoDigital.Application.IServices;
 using MercadoDigital.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,7 @@ namespace MercadoDigital.API.Controllers.v1
             _addressService = addressService;
         }
 
+        [Authorize]
         [HttpPost("")]
         public async Task<IActionResult> Create(AddressInputDTO addressDTO)
         {
@@ -36,6 +38,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
+        [Authorize]
         [HttpPut("{addressId}")]
         public async Task<IActionResult> Update(AddressInputDTO addressDTO, int addressId)
         {
@@ -53,6 +56,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
+        [Authorize]
         [HttpDelete("{addressId}")]
         public async Task<IActionResult> Delete(int addressId)
         {
@@ -70,6 +74,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
+        [Authorize]
         [HttpGet("{addressId}")]
         public async Task<IActionResult> GetAddressById(int addressId) 
         {
@@ -89,6 +94,7 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
+        [Authorize]
         [HttpGet("by-user/{id}")]
         public async Task<IActionResult> GetAddressByUserId(int id)
         {

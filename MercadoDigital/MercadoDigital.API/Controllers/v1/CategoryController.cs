@@ -2,6 +2,7 @@
 using MercadoDigital.Application.DTO.Input;
 using MercadoDigital.Application.IServices;
 using MercadoDigital.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,7 @@ namespace MercadoDigital.API.Controllers.v1
             _categoryService = categoryService;
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost("")]
         public async Task<IActionResult> Create(CategoryInputDTO categoryInputDTO)
         {
@@ -36,12 +38,13 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
-        [HttpDelete("{idCategory}")]
-        public async Task<IActionResult> Delete(int idCategory)
+        [Authorize(Roles = "Admin, Manager")]
+        [HttpDelete("{categoryId}")]
+        public async Task<IActionResult> Delete(int categoryId)
         {
             try
             {
-                var isDeleted = await _categoryService.Delete(idCategory);
+                var isDeleted = await _categoryService.Delete(categoryId);
                 if (!isDeleted)
                     return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting record");
 
@@ -59,13 +62,14 @@ namespace MercadoDigital.API.Controllers.v1
             }
         }
 
-        [HttpPut("{idCategory}")]
-        public async Task<IActionResult> Update(CategoryInputDTO categoryInputDTO, int idCategory)
+        [Authorize(Roles = "Admin, Manager")]
+        [HttpPut("{categoryId}")]
+        public async Task<IActionResult> Update(CategoryInputDTO categoryInputDTO, int categoryId)
         {
 
             try
             {
-                var isUpdated = await _categoryService.Update(categoryInputDTO, idCategory);
+                var isUpdated = await _categoryService.Update(categoryInputDTO, categoryId);
                 if (!isUpdated)
                     return StatusCode(StatusCodes.Status500InternalServerError, "Error updating record");
 

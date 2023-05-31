@@ -45,7 +45,7 @@ namespace MercadoDigital.Infra.Data.Repositories
             return (await _generalRepository.CommandExecuter
             (
                 e => e.Enderecos.AsNoTracking()
-                .Where( e => e.IdUsuario == idUser).ToListAsync()
+                .Where( e => e.UserId == idUser).ToListAsync()
             ));
         }
     }

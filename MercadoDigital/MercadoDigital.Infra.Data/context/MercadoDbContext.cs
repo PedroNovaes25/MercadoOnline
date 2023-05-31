@@ -1,15 +1,14 @@
 ﻿using MercadoDigital.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MercadoDigital.Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace MercadoDigital.Infra.Data.Connection
 {
-    public class MercadoDbContext : DbContext
+    public class MercadoDbContext : IdentityDbContext<User, Role, int,
+                                                        IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>,
+                                                        IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public MercadoDbContext()
         {
@@ -21,7 +20,6 @@ namespace MercadoDigital.Infra.Data.Connection
         public virtual DbSet<Categoria> Categorias { get; set; }
         public virtual DbSet<Produto> Produtos { get; set; }
         public virtual DbSet<Pedido> Pedidos { get; set; }
-        public virtual DbSet<Usuario> Usuarios { get; set; }
         public virtual DbSet<Endereco> Enderecos { get; set; }
         public virtual DbSet<Estoque> Estoques { get; set; }
 
@@ -37,6 +35,24 @@ namespace MercadoDigital.Infra.Data.Connection
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+
+            modelBuilder.Entity<UserRole>(userRole =>
+            {
+                userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
+
+                userRole.HasOne(ur => ur.Role)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
+
+                userRole.HasOne(ur => ur.User)
+                  .WithMany(r => r.UserRoles)
+                  .HasForeignKey(ur => ur.UserId)
+                  .IsRequired();
+            }
+           );
 
             //Config PrimaryKey
             modelBuilder.Entity<Endereco>().HasKey(c => c.IdEndereco);
@@ -58,10 +74,11 @@ namespace MercadoDigital.Infra.Data.Connection
             modelBuilder.Entity<Categoria>().HasKey(c => c.IdCategoria);
             modelBuilder.Entity<Categoria>().Property(e => e.IdCategoria)
               .UseIdentityColumn(seed: 50, increment: 5);
-
-            modelBuilder.Entity<Usuario>().HasKey(c => c.IdUsuario);
-            modelBuilder.Entity<Usuario>().Property(e => e.IdUsuario)
-              .UseIdentityColumn(seed: 60, increment: 5);
+            
+            //
+            //modelBuilder.Entity<User>().HasKey(c => c.Id);
+            //modelBuilder.Entity<User>().Property(e => e.Id)
+            //  .UseIdentityColumn(seed: 60, increment: 5);
 
             modelBuilder.Entity<CategoriaProduto>()
             .HasKey(k => new { k.IdCategoria, k.IdProduto });
@@ -70,10 +87,10 @@ namespace MercadoDigital.Infra.Data.Connection
             .HasKey(k => new { k.IdPedido, k.IdProduto });
 
             //Usuario Endereco
-            modelBuilder.Entity<Usuario>()
-                .HasOne(ue => ue.Endereco)
-                .WithOne(eu => eu.Usuario)
-                .HasForeignKey<Endereco>(eu => eu.IdUsuario);
+            modelBuilder.Entity<User>()
+                .HasOne(ue => ue.Addresses)
+                .WithOne(eu => eu.User)
+                .HasForeignKey<Endereco>(eu => eu.UserId);
 
             //Produto Estoque
             modelBuilder.Entity<Produto>()
@@ -82,10 +99,10 @@ namespace MercadoDigital.Infra.Data.Connection
                 .HasForeignKey<Estoque>(ep => ep.IdProduto);
 
             //Pedido Usuario
-            modelBuilder.Entity<Usuario>()
-                .HasMany(up => up.Pedidos)
-                .WithOne(pu => pu.Usuario)
-                .HasForeignKey(pu => pu.IdUsuario);
+            modelBuilder.Entity<User>()
+                .HasMany(up => up.Orders)
+                .WithOne(pu => pu.User)
+                .HasForeignKey(pu => pu.UserId);
 
             //CategoriaProduto Produto
             //CategoriaProduto Categoria
@@ -110,6 +127,8 @@ namespace MercadoDigital.Infra.Data.Connection
                 .HasOne(pip => pip.Produto)
                 .WithMany(ppi => ppi.PedidoItem)
                 .HasForeignKey(pip => pip.IdProduto);
+
+            
         }
     }
 }
